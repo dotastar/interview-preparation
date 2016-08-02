@@ -58,6 +58,38 @@ consider the following cases:
 ### Letter Combinations of a Phone Number
 check empty string case
 
+### Binary Tree Longest Consecutive Sequence
+`help(node, parent, len)`
+
+### Longest Increasing Subsequence
+dp[i]: max ending here
+
+### Paint Fence* 2 dp: dp1[i]=dp2[i-1]; dp2[i]=(k-1)(dp1[i-1]+dp2[i-1])
+* recursion* queue of size 3?
+
+### LRU Cache* O(n): Queue as List + HashTable ( Look up O(1) )* O(1): Queue as Double Linked List + Hashtable + dummy    * head & tail to avoid check null [Link](https://leetcode.com/discuss/20139/java-hashtable-double-linked-list-with-touch-of-pseudo-nodes)
+
+### Merge Intervals* merge two* insert into a list
+
+### 3Sum Smaller
+`for (var k = 2; k < nums.length; k++) { count += twoSumSmaller(nums, target - nums[k], k - 1); }`
+
+### N-Queens, N-Queens II* 1D array store Q pos info, validity check ALL 4* return when n === row
+
+### Perfect Squares Solutions* dp: For each i, it must be the sum of some number (i - j*j) and a perfect square number (j*j)* BFS* Mathematics: Lagrange's four-square theorem
+
+### Sort List* Extract value, sort* 2 Ptr to Mid Point, Merge Sort
+    * two ptr init pos diff
+
+### Missing Ranges* push start - 1 and end - 1, check diff between nums[i + 1] and nums[i] ?= 1 ?= 2 ?> 2
+
+### Longest Substring with At Most Two Distinct Characters * hash table: record occurrence* 2 ptr: start of the substring; current pos
+
+### Coins in a Line* dp(i, j) = sum{Ai ... Aj} - min { dp(i+1, j), dp(i, j-1) }    * Ai..Aj left and your turn to pick
+* dp(i,j)=max{Ai+min{P(i+2,j), P(i+1,j-1)},Aj+min { P(i+1, j-1), P(i, j-2) } }* base cases: dp(1,1), dp(2,2), ... dp(n, n)
+
+### Height/Level of a Binary Tree* [recursion](http://www.geeksforgeeks.org/write-a-c-program-to-find-the-maximum-depth-or-height-of-a-tree/)○ [iteration](http://www.geeksforgeeks.org/iterative-method-to-find-height-of-binary-tree/) BFS, level-wise traversal, dequeue all level atonce
+
 ### 78. Subsets
 * method 1: iterative, time O(2^n)
 * method 2: recursive
@@ -168,6 +200,17 @@ void rotate(vector<vector<int> > &matrix) {
 * get set bit: diff &= -diff;
 * [task schedule](http://www.geeksforgeeks.org/rearrange-a-string-so-that-all-same-characters-become-at-least-d-distance-away/)
 * [Morris inorder tree traversal](http://stackoverflow.com/questions/5502916/explain-morris-inorder-tree-traversal-without-using-stacks-or-recursion)
+* `strcspn`
+
+```javscriptvar strcspn = function (str1, str2) {  var hash = {};  for (var i = 0; i < str1.length; i++) {    if (!hash[str1[i]]) { hash[str1[i]] = i; }  }
+  var min = str1.length - 1;
+  for (var i = 0; i < str2.length; i++) {    if (hash[str2[i]] < min) {
+      min = hash[str2[i]]    }  }  return min;
+};
+```
+
+* [Segregate Even and Odd numbers](http://www.geeksforgeeks.org/segregate-even-and-odd-numbers/)
+
 
 
 ## code challenge
@@ -229,3 +272,54 @@ e.g. given 5:
 - [ ] 把 sorted list 转成 complete binary search tree
 - [ ] 一个数组内要是存在至少三个升序的数(array[x] < array[y] < array[z], x < y < z)就返 回 true,否则返回 false
 - [ ] Find first k common elements in n sorted arrays
+- [ ] abc2ddddefg 变成 abc1x24xdefg, abc5xefg 变成 abc1x5xefg, abc55555xefg 变成 abc5x5xefg
+- [ ] precision of sqrt(x)
+- [ ] Generate Maze
+- [ ] 先递增后递减的数组，找到最大值, 非严格递增递减
+- [ ] https://leetcode.com/problems/zigzag-conversion/
+- [ ] 2D matrix length of longest consective path 滑雪问题
+- [ ] Given an array of Ad (profit, start_time, end_time) and a timespan [0, T], find the max profit of Ads that fit the timespan
+- [ ] binary watch：上边是小时，下边是分钟，最左边最significant，最右边为1。给你数字n，return所有可能的时间，以string为表达形式
+- [ ] find the most popular number in an array of interger. The 'popular number' is defined as the number occurs more than n/4, where n is the length of array
+- [ ] 给你一个数组，从这个数组中挑出最少的数字，它们的和要比整个数组的和的1%要大。要求Linear time解决
+- [ ] insert a number in a sorted singly linked lists
+- [ ] one sorted array. find the number of appearence of a given number
+- [ ] 题目大致是BACCBBAAA -> ABABACABC，就是输出相邻字母不能相同的string，这题要用到heap
+- [ ] rearrange characters to be seperated by k
+- [ ] return duplicated subtree
+    1. bfs store each subtree in list, check whether 2 trees are the same
+- [ ] Check whether A is B's subtree
+- [ ] Find duplicate subtrees in a BT, and print out
+    1. if stream and traversal once
+- [ ] 第二题是一个array里面只有0-9的digits, 有一个target， 判断是否存在一种组合可以等于target 1. eg: [6,3,1,0,5]  target=78, 这个return True. 63+10+5 = 78 如果target= 636 return True. 631+0+5 = 636
+- [ ] rearrange aababbc so neighbouring char different: abcabab
+- [ ] Flight passes, find path from a city to another city; what if loop, n to 1 city
+- [ ] 2d array of char, 'X' cannot go, ' ' means grass, given x,y remove grass and return back (code see picture)
+- [ ] Given array contains only 0, 1, find a position to maximize left 0 and right 1
+    1. brute force,  time: O(n^2), space: O(1)
+    2. follow up, can we solve in O(n): DP, two temp array
+    3. follow up, can we use O(1) space: count all 1, and all 0, traverse array, if encounter 0, add 1, else , minus 1
+- [ ] Longest Consecutive Sequence in a matrix
+- [ ] rearrange array，使得相邻两个字符是不一样的
+- [ ] 给一个array 和一个 target求出 array里有几组tuple相加是小于等于target的
+- [ ] Different Ways to Add Parentheses?
+    1. only number, use binary search to optimize
+- [ ] 4*10000=40000的string password minbimize length
+    1. backtracking
+- [ ] 输出任意permutation使得List中的相同element的间距要大于minDistance
+    1. http://articles.leetcode.com/2010/05/here-is-another-google-phone-interview.html
+    2. http://www.geeksforgeeks.org/rearrange-a-string-so-that-all-same-characters-become-at-least-d-distance-away/
+- [ ] <235, Obama> 代表在第235秒时, obama得到了一个选票. 你现在有一个list的这种数据, 求在第x秒时谁的票数最多
+- [ ] 给一个array比如[4,2,1,3,5],根据这个array现在我们能有了一个新的array => 每个数是在原array里, 在它左边的所有比它大的number的个数,就是[0,1,2,1,0]. 题目是现在给了这个[0,1,2,1,0]要求原array, 原来array的range是1~n
+- [ ] smallest islands number and largest islands number
+- [ ] 一个二维数组代表了一个岛. 周围都是海, 岛的左侧和上侧通向Pacific, 右侧和下侧通向Atlantic. 每个数字都代表了那个位置的海拔高度. 现在下雨了, 雨只有从海拔高的地儿能流向海拔低或者一样的地儿. 返回岛上的分水岭的点
+- [ ] Leetcode 3 sum with duplicated use
+- [ ] Give flights with start and end time. Find maximum number of simultaneous flights
+- [ ] Leetcode read4
+    1. read 4096
+- [ ] number of airplanes in the sky
+- [ ] 2d boolean array, find all squares (Leetcode max square)
+    1. ​http://www.jiuzhang.com/solutions/maximal-square/
+- [ ] 输入是两个字符串，一个是 target，另一个是 guess，输出有多少个字符是完全对的，有多少个是对的字符，但是错的位置。例子：target: "ROADS"，guess: "BOARD"，输出 2 个完全对，2 个字符对但是位置不对。写代码。写完以后说，如果你现在在玩这个游戏，你最初只知道目标串的长度是多少，每次你提交一个 guess，你会得到上面那段程序的输出作为反馈，你如何尽可能少猜并且猜对？
+- [ ] Given two string S and T with same length, the distance is defined as the number of positions in which S and T have different characters. Your task is to minimize this distance, by swap at most 2 characters (which means at most 1 swap) in S. Return the two index. If it is not necessary to swap, return -1, -1
+- [ ] 给你一个password 假定6位， 有个function 每call 一次就给你一个triplet 是password 里的随即三位，order不变。比如google, 可能返回， ggl, goe, oog, ool, ........问如何最有效破译这个密码，写code
