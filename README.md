@@ -13,7 +13,9 @@
 - [x] mutex
 - [x] semaphores
 - [x] deadlock
+- [ ] livelock
 - [x] shuffling
+- [ ] what resources a processes needs- [ ] what resources a thread needs- [ ] how context switching works- [ ] how context switch is initiated by the operating system and underlying hardware- [ ] scheduling- [ ] fundamentals of "modern" concurrency constructs (multi-core)
 
 ## notes
 
@@ -485,7 +487,24 @@ public static boolean validate(byte[] bytes) {
 - [ ] BACCBBAAA -> ABABACABC,就是输出相邻字母不能相同的string
     ＊ Greedy Algorithm, using max heap, deal with characters w/ most counts first
 - [ ] 生成palindrome number, 然后寻找最相近的palindrome number,最简单的了,不过要注意奇数个digits和偶数个digits
+- [ ] stable marriage problem
+- [ ] [maximum flow problem](http://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/)
+- [ ] Design a algorithm to initialize the board of Candy Crush Saga. With M x N board, Q types of candies
+- [ ] List of boarding passes, return Travel Itinerary
+    * dfs
+- [ ] Calculate log(x)
+- [ ] Find common directory path
+- [ ] merge quad tree
+- [ ] 1234567891011... Find nth char
+- [ ] Find Inserted Char of 2 (Shuffled/Unshuffled) Strings
+- [ ] unsorted array remove duplicates
+- [ ] Reverse Vowels of a String
+- [ ] Mirror Binary Tree
+- [ ] Deep Copy Tree
 
+## steps1. clarify problem    * consider an example that is rich enough but not tedious disambiguate expected result    * state and clarify key assumptions: expect result, any memory or performance requirement    * clarify the function signature, input, output2. start with first solution that comes to mind run at least 1-2 examples    * check edge cases    * clean up with reasonable var name    * ask interviewer if any questions before refine
+3. refine the solution    * clarify assumption rinse, repeat compare the solution
+    * analytic skills sound design    * limitation corner cases error checking
 
 
 
