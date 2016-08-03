@@ -140,6 +140,12 @@ https://discuss.leetcode.com/topic/21217/java-o-n-and-o-1-extra-space
 `(sum - k)` instead of `(k - sum)`
 *follow up*: 2d matrix
 
+### 271. Encode and Decode Strings
+* prefix length for each string
+* prefix total number and lengths of each string
+
+
+
 ## note
 * does array contain duplicates?
 * empty array case
@@ -210,6 +216,7 @@ void rotate(vector<vector<int> > &matrix) {
 ```
 
 * [Segregate Even and Odd numbers](http://www.geeksforgeeks.org/segregate-even-and-odd-numbers/)
+* [Find common elements in N sorted arrays with no extra space](http://stackoverflow.com/questions/15036821/find-common-elements-in-n-sorted-arrays-with-no-extra-space)
 
 
 
@@ -265,6 +272,8 @@ e.g. given 5:
 - [ ] You are given a String number containing the digits of a phone number (the number of digits, n, can be any positive integer) . To help you memorize the number, you want to divide it into groups of contiguous digits. Each group must contain exactly 2 or 3 digits. There are three kinds of groups: • Excellent: A group that contains only the same digits. For example, 000 or 77. Good: A group of 3 digits, 2 of which are the same. For example, 030, 229 or 166. Usual: A group in which all the digits are distinct. For example, 123 or 90. The quality of a group assignment is defined as 2 × (number of excellent groups) + (number of good groups) Divide the number into groups such that the quality is maximized. Design an efficient algorithm to return the solution that maximizes the quality.
 - [ ] implement function strstrp(String a, String b) returns index where any permutation of b is a substring of a. e.g. strstrp("hello", "lle") returns 1, O(n)
 - [ ] 给你一个字符串,统计字符出现次数。输入"AABBBCCC",输出"2A3B3C"
+- [ ] encode aaabbbbcccc->aaa4xb4xc,需要考虑3aaaaa->35xa
+    * suffix num with '/'
 - [ ] use bfs to print all path from root to leaf
 - [ ] Find shortest snippet,比如给一个 Document 是 A,X,X,B,A,X,B,Query 是 A,B,要求返回 shortestSnippet 第一问:如果 Query 有序(即 A 一定要在 B 前面),那么要返回 A,X,B Follow up:如果 Query 无序(即 B 在 A 前面也可以),那么要返回 B,A
 - [ ] 求binary tree 所有从根开始到叶子的所有路径和, no recursion
@@ -323,3 +332,94 @@ e.g. given 5:
 - [ ] 输入是两个字符串，一个是 target，另一个是 guess，输出有多少个字符是完全对的，有多少个是对的字符，但是错的位置。例子：target: "ROADS"，guess: "BOARD"，输出 2 个完全对，2 个字符对但是位置不对。写代码。写完以后说，如果你现在在玩这个游戏，你最初只知道目标串的长度是多少，每次你提交一个 guess，你会得到上面那段程序的输出作为反馈，你如何尽可能少猜并且猜对？
 - [ ] Given two string S and T with same length, the distance is defined as the number of positions in which S and T have different characters. Your task is to minimize this distance, by swap at most 2 characters (which means at most 1 swap) in S. Return the two index. If it is not necessary to swap, return -1, -1
 - [ ] 给你一个password 假定6位， 有个function 每call 一次就给你一个triplet 是password 里的随即三位，order不变。比如google, 可能返回， ggl, goe, oog, ool, ........问如何最有效破译这个密码，写code
+- [x] vote log [{ candidate, time } ...], findWinner given time and log
+    * *follow up*: first k winners
+    * hashtable + quickselect
+    * priority queue
+- [ ] 平面上很多点,是否存在 条垂直于x轴的线,使得这些点对于这条线轴对称
+    ＊ find median of all x values, the store all points into hashmap
+- [ ] 10个机器,每个存有100G的ip地址,怎样找到出现次数最多的10个ip
+    1. Redistribution using hash
+    2. Create a hash table with ip as key, frequency as its value
+    3. Get top 10 ip in every 1 node, using a min heap of size 10 (O(nlogk))
+    4. Using merge sort to get final top 10
+- [ ] 孤岛问题,貌似在地 也出现过的。就是 个2D矩阵上 有’x'和'o'两个玩意。'x'连在 起的就算 个孤岛,问整个矩阵孤岛的个数
+    * *follow up* 如果是大地圖怎麼處理, 要你切 map, 考慮每個 submap 之間的關係-google
+    * *follow up* parallel process
+    * *follow up* 如果他現在要新增島到地圖上, 請回傳最新的 count, ex: int add(int x, int y), the function should return the new count    * *follow up* 這個 function 能不能做到  O(N*N) 還要好? (N為 map 邊 )
+    * 當初在 count islands 的時候把每個 island 都建成一顆 tree, 所以再判斷新加上去的 island 周圍的時候, 只要判斷周圍的 island 是不是有 common ancestor O(lgN) 如果是分開的兩個島, 現在被新的島串起來了的話, 就將兩顆 tree 接起來就好
+    * union find
+- [ ] 背包问题的变形,物品可切分,限制条件是如果 放则必须放当前总体积的 半以上,求最后的最 价值。 followup: dp的空间优化
+- [ ] public float sqrt(float num, int precision)
+- [ ] 1. Count the number of distinct pairs such that their sum is <= X 2. distinct triple pairs distinct k pairs
+- [x] set A - set B, set B - set A
+- [ ] design random queue
+    * *follow up* design random priority queue
+- [ ] design range minimum query
+    * segment tree
+    * min heap(get lowest common ancestor)
+- [ ] 给一个字符串数组,找出这样的字符串对(str1,str2),使得 1,两个字符串不包含 样的字符,2. 度乘积最大
+    ＊ 把每个单词化成26-bit的数字分别对应(a - z),出现了这位就置为1,没出现就这位就是0,存在 个Map< String, Integer > ,这样 较的时候只要 (a & b) == 0 就说明没有重复,然后 key的 度求积
+- [ ] given a budge and a matrix with matrix[i][j] a price, find maximum submatrix
+    * O(n^4)
+- [x] given an array and a size k, find a size k subset with minimum max and min diff in the subset
+    * sort, then sliding window with a queue O(nlogn)
+- [ ] design google map backend storage
+- [ ] given matrix, each node is a computer, cost to transfer a file is the distance, all computers are recivers, what's the cost
+- [ ] good number is defined as addition of 2 cubic of a number, given n, list all good numbers <= n
+- [x] unknown music play list with unique ids, given log, determine whether shuffle or random
+    * assume it's shuffle, find the length, then check the next piece of log of that length, check whether new song appears or some song appears more than 1 time
+- [ ] Given a infinite stream of number, return a random element with equal probability
+    * [reservoir sampling](http://www.geeksforgeeks.org/reservoir-sampling/)
+- [x] Given an array of integers, remove all the duplicates from it
+    * sorted: 2 pointers
+    * unsorted: hash set
+- [x] Given a content of a book, get the most freq word in the content
+    * hash table
+    * trie
+    * map reduce
+- [x] design setManager, setPeer, queryManager
+- [x] Write a program to count the total number of pages reachable from a website
+- [x] given players, 2 players a time, print all possibilities of rounds, data structure
+    * postorder traversal
+- [ ] largest substring with at most M distinct characters, stream
+- [x] given a doubly linked list, and an array containing list nodes, find component number in the array, e.g. A-B-C-D-E. [A E D] -> 2: A, E-D
+    * put array into set, traversal set, for a given node, if neighbours in set, delete
+- [x] given n cities and (n - 1) roads, find average path length, e.g. SF-SD-LA -> (SF-SD + SF-LA + SD-LA)/3
+- [ ] how to design google recommendedation search results
+    * trie
+    * distributed system, each cluster handling different prefixes
+- [x] bst most frequent integer 
+    * inorder traversal
+- [ ] backup a big file from server a to server b, slow network speed, little change
+    * rsync
+- [x] given a lot of words, find a smallest set in which sum of frequencies larger than t
+    * priority queue
+    * quick select and calculate left sum
+- [ ] update and query matrix
+    * Binary Indexed Tree -> Query & Update O(lgn) ?
+- [ ] implement `diff`
+- [ ] infinity number of object which has state true/false, init false, implement isToggled(i), toggle(start, end)
+- [ ] given a list of numbers and signature (increase, increase, decrease), print the number that fits the signature
+    * record last decreasing point, insert next number before last descreasing point
+- [ ] given a number e.g. 1112223334445556677888..., find the missing 2 numbers
+- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
