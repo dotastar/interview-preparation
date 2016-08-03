@@ -242,6 +242,7 @@ void rotate(vector<vector<int> > &matrix) {
 - [ ] sparse matrix
 - [ ] right rotate k 次。要求 O(N),in-place
 - [ ] 一群人排队,每个人有(height, Tvalue), height 表示身高,Tvalue 表示 前面有几个比当前人身 高高的人。。然后顺序打乱,重新排队,还得复原以前的队列
+    * Sort by Tvalue, then height, in increasing order. Then iterate from the beginning, insert value if Tvalue > 0
 - [ ] 给以下矩阵序列 level 0: 0, level 1: 1,2; 3,4 level 2: 5,6,7,8; 9,10,11,12; 13,14,15,16; 17,18,19,20, 写个转换方程 int get(int level, int i, int j)
 - [ ] 找一个先单增后单减 array 的最大值
 - [ ] 求最长等差数列.给定一个未排序数组,找出其中最长的等差数列.(PS O(n^2)的时间复杂度)
@@ -282,10 +283,9 @@ e.g. given 5:
 - [ ] 一个数组内要是存在至少三个升序的数(array[x] < array[y] < array[z], x < y < z)就返 回 true,否则返回 false
 - [ ] Find first k common elements in n sorted arrays
 - [ ] abc2ddddefg 变成 abc1x24xdefg, abc5xefg 变成 abc1x5xefg, abc55555xefg 变成 abc5x5xefg
-- [ ] precision of sqrt(x)
-- [ ] Generate Maze
+- [ ] public float sqrt(float num, int precision)
+- [ ] random maze generator. 其实就是在 个 维空间画墙但不能 允许有封闭空间
 - [ ] 先递增后递减的数组，找到最大值, 非严格递增递减
-- [ ] https://leetcode.com/problems/zigzag-conversion/
 - [ ] 2D matrix length of longest consective path 滑雪问题
 - [ ] Given an array of Ad (profit, start_time, end_time) and a timespan [0, T], find the max profit of Ads that fit the timespan
 - [ ] binary watch：上边是小时，下边是分钟，最左边最significant，最右边为1。给你数字n，return所有可能的时间，以string为表达形式
@@ -350,7 +350,6 @@ e.g. given 5:
     * 當初在 count islands 的時候把每個 island 都建成一顆 tree, 所以再判斷新加上去的 island 周圍的時候, 只要判斷周圍的 island 是不是有 common ancestor O(lgN) 如果是分開的兩個島, 現在被新的島串起來了的話, 就將兩顆 tree 接起來就好
     * union find
 - [ ] 背包问题的变形,物品可切分,限制条件是如果 放则必须放当前总体积的 半以上,求最后的最 价值。 followup: dp的空间优化
-- [ ] public float sqrt(float num, int precision)
 - [ ] 1. Count the number of distinct pairs such that their sum is <= X 2. distinct triple pairs distinct k pairs
 - [x] set A - set B, set B - set A
 - [ ] design random queue
@@ -403,12 +402,89 @@ e.g. given 5:
 - [ ] given a list of numbers and signature (increase, increase, decrease), print the number that fits the signature
     * record last decreasing point, insert next number before last descreasing point
 - [ ] given a number e.g. 1112223334445556677888..., find the missing 2 numbers
-- 
+- [ ] 一对文件有dependency, 找到正确的安装顺序
+    ＊ topological sort
+- [ ] Stock + House robber 结合题 可以无限买卖,但卖了之后要至少隔一天才能买
+    ＊ hold[ i ] = max(hold[i-1], unhold[i-2] - price[ i ])
+    ＊ unhold[ i ] = max(uphold[i-1], hold[i-1] + price[ i ])
+- [ ] given morse codes w/o spaces, output all possibilities
+- [ ] 两个string 的 list,找出只在某个list 出现的string
+    * *follow up* 扩展到k个list
+- [ ] 0 是障碍物,2是 物,1是可 的路径。 要求着到可以走到所有食物一次最短的点
+- [ ] hamming distance between a and b, a, b < 2^64
+    * *follow up*: how to speed up 如果你 这个 法,但是ram只有2g,那会发生什么情况
+    1. t = a ^ b, for (t != 0) {t = t ^ (t - 1); count++ }
+    2. 2. 可以 2^32的字典要4G空间,这样 两次就好
+    3. 3. using swap space, RAM = 2 + 4 = 6, so no problem
+- [ ] 给了一个UTF-8的pattern:
+
+```
+1byte - 0XXX, XXXX
+2byte - 110X, XXXX, 10XX,XXXX
+3byte - 1110, XXXX, 10XX,XXXX, 10XX,XXXX
+4byte - 1111, 0XXX, 10XX,XXXX, 10XX,XXXX, 10XX,XXXX
+...
+7byte - 1111, 1110, 10XX,XXXX, 10XX,XXXX, 10XX,XXXX, ..., 10XX,XXXX
+8byte - 1111, 1111, 10XX,XXXX, 10XX,XXXX, 10XX,XXXX, ......, 10XX,XXXX
+```
+
+write function [`isvalidUTF(byte[])`](http://codereview.stackexchange.com/questions/59428/validating-utf-8-byte-array)
+
+```java
+public static boolean validate(byte[] bytes) {
+  int expectedLen;
+  if (bytes.length == 0) return false;
+  else if ((bytes[0] & 0b10000000) == 0b00000000) expectedLen = 1;
+  else if ((bytes[0] & 0b11100000) == 0b11000000) expectedLen = 2;
+  else if ((bytes[0] & 0b11110000) == 0b11100000) expectedLen = 3;
+  else if ((bytes[0] & 0b11111000) == 0b11110000) expectedLen = 4;
+  else if ((bytes[0] & 0b11111100) == 0b11111000) expectedLen = 5;
+  else if ((bytes[0] & 0b11111110) == 0b11111100) expectedLen = 6;
+  else return false;
+  
+  if (expectedLen != bytes.length) return false;
+  
+  for (int i = 1; i < bytes.length; i++) {
+    if ((bytes[i] & 0b11000000) != 0b10000000) {
+      return false;
+    }
+  }
+  
+  return true;
+}
+```
 
 
-
-
-
+- [ ]  种新型的storage,怎么样用来scan engineer的hard disk来做备份
+- [ ] given height, how many full binary tree are there
+- [ ] 给你一个node,包含getId 和 setId,children由 iterator<node>接 提供。node  的id 如果为null(Integer 类型) 或者为负都是invalid。并且互相之间的id都是 有重复。要求遍历树,将所有的invalid节点找出然后赋给他们不重复的正数
+- [ ] 给你一组Treenode,他们每个有 id, parentId, value,让你输出所有subtree的sum of value
+- [ ] given increating int stream, construct bst
+- [ ] 写 个de duplicator,wrap  个stream,输出的stream全是不重复数字
+- [ ] 求stream,出现次数最多的数字。然后扩展到N个machine的情况
+- [ ] 假设某个company在不同国家都有office,每个国家的office,如果是当地的假期,就可以放假了。假设可以查询任意航班的信息,每个星期只能呆在 个地 ,只有周末的时候才能 去别的国家。找 个放假天数最多的schedule
+- [ ] string as float, do addition
+- [ ] 给画布上的 个线段,问怎么画最快(移动画笔会浪费时间)
+    * sort lines first (based on two points and length)
+- [ ] 实现扫雷
+- [ ] 设计电话本系统,实现三个功能:查找号码 boolean isTaken(),添加号码 void takeNumber(),返回1个不在电话本的号码 number giveMeANumber()
+    * trie with numbers available at current level
+- [ ] 2d matrix trap rain water
+- [ ] cup volume range, fountain machine有不同的option对应不同的 出水量range, possible sequences
+- [ ] tic-tac-toe all possible state
+- [ ] find all factors of n
+    O(lg n)
+- [ ] 给distinct primes list,回传所有由这些primes组成的数字
+    * *follow up* duplicate primes given
+- [ ] 给一个图 让求图中所有的正方形, design own data structure
+- [ ] class design for snake
+- [ ] bst add, find, delete
+- [ ] 写jump iterator类, 构造函数传  个普通的iterator, 然后实现next(), hasNext(). next()返回传 iterator的next().next(), 就是每次跳过 个元素输出. 然后再实现 个rotateIterator(), 构造函数传入List<Iterator<T>>, 实现next(), hasNext(). 例如:传 的三个iterator  的值分别是[[1,2,3],[4,5,6], [7,8]], 那rotateIterator的next()应该输出[1,4,7,2,5,8,3,6]. 就是竖着遍历每个iterator输出, 如果当前的iterator没有了, 就跳到下 个.
+- [ ] determine binary tree is complete tree
+- [ ] generate full binary trees of height n
+- [ ] BACCBBAAA -> ABABACABC,就是输出相邻字母不能相同的string
+    ＊ Greedy Algorithm, using max heap, deal with characters w/ most counts first
+- [ ] 生成palindrome number, 然后寻找最相近的palindrome number,最简单的了,不过要注意奇数个digits和偶数个digits
 
 
 
