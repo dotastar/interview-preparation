@@ -146,12 +146,26 @@ https://discuss.leetcode.com/topic/21217/java-o-n-and-o-1-extra-space
 * prefix length for each string
 * prefix total number and lengths of each string
 
+### 310. Minimum Height Trees
+* extend from path graph, start from leaves, when pointers less than 2 unit distance apart, when these pointers are middle points
+* above idea is just to find the longest path along the way, to find the longest path, dfs/bfs one node, find the most apart one, then dfs/bfs that node, find the most aparat one, the path is the longest path
+
+
+### 33. Search in Rotated Sorted Array
+* [generalized binar search method](https://discuss.leetcode.com/topic/53387/java-without-finding-the-pivot-with-detailed-explainations)
+
+### 307. Range Sum Query - Mutable
+* update O(1), query O(n)
+* update O(n), query O(1) precompute
+* segment tree update O(lg n) query O(lg n)
+* - [x] range minimum query: [segment tree](http://www.geeksforgeeks.org/segment-tree-set-1-range-minimum-query/)
 
 
 ## note
 * does array contain duplicates?
 * empty array case
 * replace function callback
+* replace only replace one instance if `/g` flag is not add in `RegExp`
 
 ```javascript
 function replacer(match, p1, p2, p3, offset, string) {
@@ -356,9 +370,6 @@ e.g. given 5:
 - [x] set A - set B, set B - set A
 - [ ] design random queue
     * *follow up* design random priority queue
-- [ ] design range minimum query
-    * segment tree
-    * min heap(get lowest common ancestor)
 - [ ] 给一个字符串数组,找出这样的字符串对(str1,str2),使得 1,两个字符串不包含 样的字符,2. 度乘积最大
     ＊ 把每个单词化成26-bit的数字分别对应(a - z),出现了这位就置为1,没出现就这位就是0,存在 个Map< String, Integer > ,这样 较的时候只要 (a & b) == 0 就说明没有重复,然后 key的 度求积
 - [ ] given a budge and a matrix with matrix[i][j] a price, find maximum submatrix
@@ -501,6 +512,7 @@ public static boolean validate(byte[] bytes) {
 - [ ] Reverse Vowels of a String
 - [ ] Mirror Binary Tree
 - [ ] Deep Copy Tree
+- [x] [implement circular queue](https://www.careercup.com/question?id=14133666)
 
 ## steps1. clarify problem    * consider an example that is rich enough but not tedious disambiguate expected result    * state and clarify key assumptions: expect result, any memory or performance requirement    * clarify the function signature, input, output2. start with first solution that comes to mind run at least 1-2 examples    * check edge cases    * clean up with reasonable var name    * ask interviewer if any questions before refine
 3. refine the solution    * clarify assumption rinse, repeat compare the solution
