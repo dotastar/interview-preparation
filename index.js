@@ -1,56 +1,34 @@
-var shortestDistance = function(grid) {
-    if (!grid || grid.length === 0 || grid[0].length === 0) return 0;
+var threeSumClosest = function(nums, target) {
+    let closest = Infinity;
     
-    const row = grid.length;
-    const col = grid[0].length;
+    nums.sort((a, b) => a - b);
     
-    const distances = Array.from({length: row}, () => Array.from({length: col}, () => 0));
-    const reachedBldgs = {};
-    let totalBldgs = 0;
-    
-    grid.forEach((r, i) => {
-        r.forEach((c, j) => {
-            if (c === 0) {
-                const visited = Array.from({length: row}, () => Array.from({length: col}, () => false));
-                const queue = [[i, j, 0]];
-                
-                while (queue.length > 0) {
-                    const [x, y, walked] = queue.shift();
-                    if (x >= 0 && x < row && y >= 0 && y < col && (!(visited[x][y]))) {
-                        visited[x][y] = true;
-                        
-                        if (grid[x][y] === 1 && ((!(`${i},${j}` in reachedBldgs)) || !reachedBldgs[`${i},${j}`].has(`${x},${y}`))) {
-                            distances[i][j] += walked;
-                            if (`${i},${j}` in reachedBldgs) {
-                                reachedBldgs[`${i},${j}`].add(`${x},${y}`);
-                            } else {
-                                reachedBldgs[`${i},${j}`] = new Set([`${x},${y}`])
-                            }
-                        } else if (grid[x][y] === 0) {
-                            queue.push([x + 1, y, walked + 1], [x - 1, y, walked + 1], [x, y + 1, walked + 1], [x, y - 1, walked + 1]);
-                        }
-                    }
-                }
-                
-            } else if (c === 1) {
-                totalBldgs++;
+    for (let i = 0; i < nums.length; i++) {
+        const roughly = target - nums[i];
+        
+        let j = i + 1;
+        let k = nums.length - 1;
+        
+        while (j < k) {
+            const sum = nums[j] + nums[k];
+            
+            if (sum === roughly) return sum + nums[i];
+            
+            if (Math.abs(sum - roughly) < Math.abs(closest - target)) {
+                console.log(nums[i], nums[j], nums[k]);
+                closest = sum + nums[i];
             }
-        });
-    });
-    
-    let min = Infinity;
-    
-    for (let i = 0; i < row; i++) {
-        for (let j = 0; j < col; j++) {
-            if (grid[i][j] === 0) {
-                if (`${i},${j}` in reachedBldgs && reachedBldgs[`${i},${j}`].size === totalBldgs) {
-                    min = Math.min(min, distances[i][j]);
-                }
+            
+            if (sum > roughly) {
+                k--;
+            } else {
+                j++;
             }
+            
         }
     }
     
-    return Number.isFinite(min) ? min : -1;
+    return closest;
 };
 
-console.log(shortestDistance([[1,2,0,2,2,0,2,1,0,2,2,0,0,0,0,2,0,0,2,0,0,0,0,0,2,2,0,2,0,0],[0,0,2,1,2,2,2,0,0,2,1,0,2,2,0,2,0,2,0,2,2,0,0,0,0,0,2,0,0,0],[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,2,0,0,2,0,2,0,0,0,2,0,0,2,0,0],[0,2,2,2,0,2,0,0,0,0,0,2,0,2,2,2,0,2,0,0,0,0,2,0,0,0,2,0,0,0],[2,0,1,2,0,2,0,0,0,2,0,0,0,2,0,2,1,2,0,2,0,2,1,0,2,0,1,0,0,2],[2,0,2,2,0,0,0,2,0,0,1,0,0,0,2,2,0,0,2,2,2,2,0,0,0,0,0,0,0,0],[0,0,2,2,0,2,2,0,0,0,0,1,0,2,0,0,0,2,2,2,2,0,2,0,0,2,0,0,0,0],[0,0,0,2,2,0,0,0,0,2,2,0,2,0,2,2,1,0,0,2,0,2,0,2,0,2,0,2,2,0],[0,0,0,2,0,0,0,2,0,0,0,0,0,2,2,2,0,2,2,0,2,2,0,0,0,2,0,0,1,0],[0,2,0,0,0,0,2,0,0,0,0,2,2,0,2,2,2,2,2,0,2,2,1,2,0,2,0,0,0,0],[0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,2,0,2,0,2,0,2,0,0,0,2],[0,0,0,0,1,0,1,1,0,0,2,2,0,2,0,0,0,2,0,2,0,0,2,0,0,0,1,0,0,2],[0,2,0,0,0,2,0,0,0,0,0,2,2,0,0,0,2,2,0,2,0,0,2,0,0,0,1,0,0,2],[0,2,2,0,0,2,0,2,0,0,0,2,2,0,2,2,0,0,0,0,0,0,0,2,2,0,2,2,0,1],[2,0,0,0,0,0,1,2,0,1,0,2,0,0,0,2,0,0,2,0,2,0,0,2,0,0,2,0,0,2],[2,0,2,0,2,0,0,2,0,0,0,2,0,0,2,0,2,0,0,0,0,2,0,2,2,0,2,2,0,0],[2,1,2,2,2,2,2,2,1,1,0,2,2,2,2,0,0,0,2,0,0,0,2,2,1,2,0,0,0,0],[0,0,2,0,0,0,0,1,0,2,0,1,0,2,2,0,0,2,2,0,2,0,2,2,0,2,0,0,0,0],[0,0,0,0,0,2,2,2,2,2,0,0,0,2,0,0,0,0,0,0,2,2,2,2,2,2,2,0,0,0],[0,0,0,0,0,2,0,2,0,0,2,0,1,2,2,0,0,0,2,0,2,0,0,2,0,0,0,2,0,0],[0,2,2,0,0,0,0,2,2,0,2,0,2,2,0,0,0,2,0,1,0,0,2,0,2,0,2,0,1,2],[2,2,2,0,0,2,0,0,0,2,2,0,2,0,2,0,2,0,2,0,0,0,0,2,2,0,0,2,0,2]]))
+console.log(threeSumClosest([0,2,1,-3], 1))

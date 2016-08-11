@@ -1,22 +1,5 @@
 # interview preparation
 
-## checklist
-- [ ] HTTP
-- [ ] WebSockets
-- [ ] cookies
-- [ ] asset loading/caching
-- [ ] A/B testing
-- [ ] REST API
-- [ ] understand the intricacies of how JS and CSS impact rendering
-- [ ] SEO
-- [ ] client-side performance and optimization experience
-- [x] mutex
-- [x] semaphores
-- [x] deadlock
-- [ ] livelock
-- [x] shuffling
-- [ ] what resources a processes needs- [ ] what resources a thread needs- [ ] how context switching works- [ ] how context switch is initiated by the operating system and underlying hardware- [ ] scheduling- [ ] fundamentals of "modern" concurrency constructs (multi-core)
-
 ## notes
 
 ### deck shuffle
@@ -26,9 +9,8 @@ Go through the elements in order, swapping each element with a  random element i
 a mutex is an integer that  starts at 1.  Whenever a thread needs to alter the array, it "locks" the mutex.  This  causes the thread to wait until the number is positive and then decreases it by one. When the thread is done modifying the array, it "unlocks" the mutex, causing the  number to increase by 1.
 
 ### semaphore
-a semaphore's  integer may start at a number greater than 1.  The number at which a semaphore  starts is the number of threads that may access the resource at once.  Semaphores  support "wait" and "signal" operations, which are analogous to the "lock" and  "unlock" operations of mutexes.
-deadlock prevention
-assign an order  to our locks and require that locks always be acquired in order
+a semaphore's  integer may start at a number greater than 1. The number at which a semaphore starts is the number of threads that may access the resource at once. Semaphores support "wait" and "signal" operations, which are analogous to the "lock" and "unlock" operations of mutexes.
+* deadlock prevention: assign an order to our locks and require that locks always be acquired in order
 ​
 ### rendering performance
 * 60FPS (16.66 ms/frame), and browser has housekeeping work, so all of your work needs to be completed inside 10ms. When you fail to meet this budget the frame rate drops, and the content judders on screen, referred to as **jank**
@@ -39,6 +21,37 @@ assign an order  to our locks and require that locks always be acquired in order
 * [rendering performance](https://developers.google.com/web/fundamentals/performance/rendering/?hl=en)
 * [optimize javascript execution](https://developers.google.com/web/fundamentals/performance/rendering/optimize-javascript-execution?hl=en)
 
+### A/B testing
+you have two versions of an element (A and B) and a metric that defines success. To determine which version is better, you subject both versions to experimentation simultaneously. In the end, you measure which version was more successful and select that version for real-world use
+
+​usually tested elements:
+
+* The call to action’s (i.e. the button’s) wording, size, color and placement
+​* Headline or product description,
+* Form’s length and types of fields,
+* Layout and style of website,
+* Product pricing and promotional offers,
+* Images on landing and product pages,
+* Amount of text on the page (short vs. long)
+
+### what resources a processes needs
+* an image of the executable machine code associated with a program
+* memory, which includes the executable code, process-specific data (input and output), a call stack (to keep track of active subroutines and/or other events), and a heap to hold intermediate computation data generated during run time
+* os descriptors of resources that are allocated to the process, e.g. file descriptors
+* security attributes, such as the process owner and the process' set of permissions
+* processor state (context), such as the content of registers and physical memory addressing. The state is typically stored in computer registers when the process is executing, and in memory otherwise
+
+### how context switching works
+say Thread A calls sched_yield() and is replaced by Thread B:
+
+1. Thread A enters the kernel, changing from user mode to kernel mode;
+2. Thread A in the kernel context-switches to Thread B in the kernel;
+3. Thread B exits the kernel, changing from kernel mode back to user mode.
+
+When a thread context-switches, it calls into the scheduler (the scheduler does not run as a separate thread - it always runs in the context of the current thread). The scheduler code selects a process to run next, and calls the switch_to() function
+
+http://stackoverflow.com/questions/12630214/context-switch-internals
+​
 ​
 ## leetcode
 
@@ -162,6 +175,7 @@ https://discuss.leetcode.com/topic/21217/java-o-n-and-o-1-extra-space
 
 
 ## note
+* [scalability](http://blog.csdn.net/v_july_v/article/details/7382693)
 * does array contain duplicates?
 * empty array case
 * replace function callback
@@ -517,6 +531,30 @@ public static boolean validate(byte[] bytes) {
 ## steps1. clarify problem    * consider an example that is rich enough but not tedious disambiguate expected result    * state and clarify key assumptions: expect result, any memory or performance requirement    * clarify the function signature, input, output2. start with first solution that comes to mind run at least 1-2 examples    * check edge cases    * clean up with reasonable var name    * ask interviewer if any questions before refine
 3. refine the solution    * clarify assumption rinse, repeat compare the solution
     * analytic skills sound design    * limitation corner cases error checking
+
+## given problem...
+* if array is ordered, consider:
+    * binary search
+    * 2 pointers, one from front, one from end
+* to return a set of answers, don't forget to remove duplicates
+    * sort, then skip
+
+## checklist
+- [x] HTTP
+- [x] WebSockets
+- [x] cookies
+- [ ] asset loading/caching
+- [x] A/B testing
+- [x] REST API
+- [x] understand the intricacies of how JS and CSS impact rendering
+- [ ] SEO
+- [ ] client-side performance and optimization experience
+- [x] mutex
+- [x] semaphores
+- [x] deadlock
+- [x] [livelock](https://docs.oracle.com/javase/tutorial/essential/concurrency/starvelive.html)
+- [x] shuffling- [ ] scheduling
+- [ ] how context switch is initiated by the operating system and underlying hardware- [ ] fundamentals of "modern" concurrency constructs (multi-core)
 
 
 
