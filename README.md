@@ -50,8 +50,14 @@ say Thread A calls sched_yield() and is replaced by Thread B:
 
 When a thread context-switches, it calls into the scheduler (the scheduler does not run as a separate thread - it always runs in the context of the current thread). The scheduler code selects a process to run next, and calls the switch_to() function
 
-http://stackoverflow.com/questions/12630214/context-switch-internals
-​
+* [context switch internals](http://stackoverflow.com/questions/12630214/context-switch-internals)
+
+### DFS, BFS, IDDFS
+
+ | time | space | when to use
+​DFS | O(b^d) | O(d) | graph/tree is not very big
+​BFS | O(b^d) | O(b^d) | space not issue, want the closest answer to the root
+​IDDFS | O(b^d) | O(bd) | need a BFS but not enough memory, slower performance is accepted
 ​
 ## leetcode
 
@@ -254,9 +260,9 @@ void rotate(vector<vector<int> > &matrix) {
 - [ ] [bianry tree and](http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=140358&page=1#pid1971401)
 - [ ] deep copy tree
 - [ ] serialize an N-ary Tree
-- [ ] 给定一个 array,只包含 0,1, 找到一个分割位置,使左侧 0 出现的个数和右侧 1 出现的个数之和最大化
+- [x] 给定一个 array,只包含 0,1, 找到一个分割位置,使左侧 0 出现的个数和右侧 1 出现的个数之和最大化
     * brute force, time: O(n^2), space: O(1)
-    * follow up, can we solve in O(n): DP, two temp array-google 1point3acres
+    * follow up, can we solve in O(n): DP, two temp array
     * follow up, can we use O(1) space: count all 1, and all 0, traverse array, if encounter 0, add 1, else , minus 1
 - [ ] Give you an integer matrix, find the longest increasing continuous subsequence in this matrix
 - [ ] 实现任意大整数的加减乘除
@@ -305,6 +311,10 @@ e.g. given 5:
 - [ ] 给你一个字符串,统计字符出现次数。输入"AABBBCCC",输出"2A3B3C"
 - [ ] encode aaabbbbcccc->aaa4xb4xc,需要考虑3aaaaa->35xa
     * suffix num with '/'
+- [ ] given decoder, write an encoder 3xe -> eee
+    * abc2ddddefg
+    * abc5xefg
+    * abc55555xefg
 - [ ] use bfs to print all path from root to leaf
 - [ ] Find shortest snippet,比如给一个 Document 是 A,X,X,B,A,X,B,Query 是 A,B,要求返回 shortestSnippet 第一问:如果 Query 有序(即 A 一定要在 B 前面),那么要返回 A,X,B Follow up:如果 Query 无序(即 B 在 A 前面也可以),那么要返回 B,A
 - [ ] 求binary tree 所有从根开始到叶子的所有路径和, no recursion
