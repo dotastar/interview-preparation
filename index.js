@@ -1,34 +1,30 @@
-var threeSumClosest = function(nums, target) {
-    let closest = Infinity;
-    
-    nums.sort((a, b) => a - b);
-    
-    for (let i = 0; i < nums.length; i++) {
-        const roughly = target - nums[i];
-        
-        let j = i + 1;
-        let k = nums.length - 1;
-        
-        while (j < k) {
-            const sum = nums[j] + nums[k];
-            
-            if (sum === roughly) return sum + nums[i];
-            
-            if (Math.abs(sum - roughly) < Math.abs(closest - target)) {
-                console.log(nums[i], nums[j], nums[k]);
-                closest = sum + nums[i];
-            }
-            
-            if (sum > roughly) {
-                k--;
-            } else {
-                j++;
-            }
-            
-        }
-    }
-    
-    return closest;
-};
+const closest = (arr, x, left = 0, right = arr.length - 1) => {
+    if (left > right) return -1;
+    if (left === right) {
+        const choices = [left];
+        if (left - 1 >= 0) choices.push(left - 1);
+        if (left + 1 < arr.length) choices.push(left + 1);
 
-console.log(threeSumClosest([0,2,1,-3], 1))
+        console.log(choices)
+
+        const abss = choices.map(e => Math.abs(arr[e] - x));
+        let i = 0;
+        let diff = Infinity;
+
+        abss.forEach((e, j) => {
+            if (e < diff) {
+                diff = e;
+                i = j;
+            }
+        });
+
+        return choices[i];
+    }
+    const mid = left + ((right - left) >> 1);
+
+    if (arr[mid] === x) return mid;
+    if (arr[mid] > x) return closest(arr, x, left, mid - 1);
+    return closest(arr, x, mid + 1, right);
+}
+
+console.log(closest([1,2,3,4,5,5.2,6,7,8], 7.6))
