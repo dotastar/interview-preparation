@@ -52,18 +52,69 @@ When a thread context-switches, it calls into the scheduler (the scheduler does 
 
 * [context switch internals](http://stackoverflow.com/questions/12630214/context-switch-internals)
 
+
+#### from the Running state to the Blocked state for the requesting process, and from the Ready state to the Running state for the selected next process
+1. The running process sends a system call via an interrupt.
+2. The CPU jumps into the interrupt handler, which is part of the operating system.
+3. The OS saves all the registers of the running process into that process's entry of the process table.
+4. If another process is already waiting for the device to respond, the OS places the process into a waiting queue for that device. Otherwise, the process's request is sent to the device.
+5. The OS selects the next process to execute from the queue of those processes in the ready state. This is called the ready queue.
+6. The OS restores the registers to the values saved in the next process's entry of the process table.
+7. The OS returns to the program counter value stored in the next process's entry of the process table.
+
+#### from the Blocked state to the Ready state
+1. The OS saves the device's response in memory for the requesting process to use when it gets the CPU again.
+2. The OS moves the blocked process into the ready queue.
+3. If there are processes waiting for the device, the OS sends the next request to the device.
+4. The OS returns back to the process that was running at the time the interrupt occurred.
+
+### scheduling
+* the ready queue contains many processes, selection to choose one to start running is process scheduling.
+* **round robin**: each process is treated equally, when one process runs its time slice out, it is simply placed at the end of the ready queue, and the next process in line begins
+* choose by priority, problem: easily starve out the low-priority jobs
+* assign longer time slices to higher-priority jobs, but otherwise follow a round-robin strategy
+* choose jobs probabilistically, where higher-priority jobs have a higher priority of being selected
+
+### HTTP caching
+1. Use consistent URLs: if you serve the same content on different URLs, then that content will be fetched and stored multiple times
+2. Ensure the server provides a validation token (ETag): validation tokens eliminate the need to transfer the same bytes when a resource has not changed on the server.
+3. Identify which resources can be cached by intermediaries: those with responses that are identical for all users are great candidates to be cached by a CDN and other intermediaries.
+4. Determine the optimal cache lifetime for each resource: different resources may have different freshness requirements. Audit and determine the appropriate max-age for each one.
+5. Determine the best cache hierarchy for your site: the combination of resource URLs with content fingerprints, and short or no-cache lifetimes for HTML documents allows you to control how quickly updates are picked up by the client.
+6. Minimize churn: some resources are updated more frequently than others. If there is a particular part of resource (e.g. JavaScript function, or set of CSS styles) that are often updated, consider delivering that code as a separate file. Doing so allows the remainder of the content (e.g. library code that does not change very often), to be fetched from cache and minimizes the amount of downloaded content whenever an update is fetched.
+
+[source](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching)
+
 ### DFS, BFS, IDDFS
 
  | time | space | when to use
 ​DFS | O(b^d) | O(d) | graph/tree is not very big
 ​BFS | O(b^d) | O(b^d) | space not issue, want the closest answer to the root
 ​IDDFS | O(b^d) | O(bd) | need a BFS but not enough memory, slower performance is accepted
-​
-## cases to consider
+
+## given problem...
+1. clarify problem
+    * consider an example that is rich enough but not tedious disambiguate expected result
+    * state and clarify key assumptions: expect result, any memory or performance requirement
+    * clarify the function signature, input, output
+2. start with first solution that comes to mind run at least 1-2 examples
+    * write steps down in order not to miss any step
+    * check edge cases
+    * clean up with reasonable variable name
+    * ask interviewer if any questions before refine
+3. refine the solution
+    * clarify assumption rinse, repeat compare the solution
+    * analytic skills sound design
+    * limitation corner cases error checking
 
 ### array
 * duplicate element?
 * empty array case
+* if array is ordered:
+    * binary search
+    * 2 pointers, one from front, one from end
+* remove duplicates?
+    * sort, then skip
 
 ## leetcode
 
@@ -556,43 +607,20 @@ public static boolean validate(byte[] bytes) {
 - [ ] stable marriage problem
 - [ ] [maximum flow problem](http://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/)
 
-## steps
-1. clarify problem
-    * consider an example that is rich enough but not tedious disambiguate expected result
-    * state and clarify key assumptions: expect result, any memory or performance requirement
-    * clarify the function signature, input, output
-2. start with first solution that comes to mind run at least 1-2 examples
-    * write steps down in order not to miss any step
-    * check edge cases
-    * clean up with reasonable variable name
-    * ask interviewer if any questions before refine
-3. refine the solution
-    * clarify assumption rinse, repeat compare the solution
-    * analytic skills sound design
-    * limitation corner cases error checking
-
-## given problem...
-* if array is ordered, consider:
-    * binary search
-    * 2 pointers, one from front, one from end
-* to return a set of answers, don't forget to remove duplicates
-    * sort, then skip
-
 ## checklist
 - [x] HTTP
 - [x] WebSockets
 - [x] cookies
-- [ ] asset loading/caching
+- [x] asset loading/caching
 - [x] A/B testing
 - [x] REST API
-- [x] understand the intricacies of how JS and CSS impact rendering
-- [ ] SEO
-- [ ] client-side performance and optimization experience
+- [x] understand the intricacies of how JS and CSS impact rendering, client-side performance and optimization experience
+- [-] SEO
 - [x] mutex
 - [x] semaphores
 - [x] deadlock
 - [x] [livelock](https://docs.oracle.com/javase/tutorial/essential/concurrency/starvelive.html)
 - [x] shuffling
-- [ ] scheduling
-- [ ] how context switch is initiated by the operating system and underlying hardware
-- [ ] fundamentals of "modern" concurrency constructs (multi-core)
+- [x] scheduling
+- [x] how context switch is initiated by the operating system and underlying hardware
+- [-] fundamentals of "modern" concurrency constructs (multi-core)
