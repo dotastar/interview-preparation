@@ -1,44 +1,15 @@
-const allPath = (root) => {
-  const ans = [];
-
-  const queue = [[root, []]];
-
-  while (queue.length > 0) {
-    const [node, curr] = queue.shift();
-
+var divide = function(dividend, divisor) {
+    let result = 0;
     
-    
-    if (node) {
-      if (!node.left && !node.right) {
-        ans.push(curr.concat([node.val]));
-      } else {
+    while (dividend >= divisor) {
+        let i = 0;
         
-        if (node.left) {
-          queue.push([node.left, curr.concat([node.val])]);
-        }
-
-        if (node.right) {
-          queue.push([node.right, curr.concat([node.val])]);
-        }
-      }
+        while (dividend >= (divisor << (i + 1))) i++;
+        result += 1 << i;
+        dividend -= divisor << i;
     }
-  }
+    
+    return result;
+};
 
-  return ans;
-}
-
-console.log(allPath({
-  val: 1,
-  left: {
-    val: 2,
-  },
-  right: {
-    val: 3,
-    left: {
-      val: 4,
-    },
-    right: {
-      val: 5,
-    }
-  }
-}))
+console.log(divide(321, 1))

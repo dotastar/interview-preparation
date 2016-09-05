@@ -118,9 +118,6 @@ When a thread context-switches, it calls into the scheduler (the scheduler does 
 
 ## leetcode
 
-### todo
-4, 10, 15, 16, 18, 29, 44, 31, 32, 45, 55, 68, 72, 73, 74, 75, 76, 79, 84, 85 87 88, 92, 95, 97, 99, 105, 106, 111, 112, 113, 115, 116, 117, 120, 123, 124
-
 ### String to Integer (atoi)
 consider the following cases:
 
