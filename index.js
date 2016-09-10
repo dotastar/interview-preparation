@@ -1,15 +1,25 @@
-var divide = function(dividend, divisor) {
-    let result = 0;
+var removeNthFromEnd = function(head, n) {
+    const dummy = {}
+    dummy.next = head;
+    let prev = dummy;
+    let next = dummy;
     
-    while (dividend >= divisor) {
-        let i = 0;
-        
-        while (dividend >= (divisor << (i + 1))) i++;
-        result += 1 << i;
-        dividend -= divisor << i;
+    for (let i = 0; i < n; i++) {
+        next = next.next;
+    }
+
+    console.log(prev, next);
+    
+    while (next.next) {
+        prev = prev.next;
+        next = next.next;
     }
     
-    return result;
+    prev.next = prev.next.next;
+    return dummy.next;
 };
 
-console.log(divide(321, 1))
+console.log(removeNthFromEnd({
+  val: 1,
+  next: null
+}, 1))

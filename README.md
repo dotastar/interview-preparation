@@ -52,7 +52,6 @@ When a thread context-switches, it calls into the scheduler (the scheduler does 
 
 * [context switch internals](http://stackoverflow.com/questions/12630214/context-switch-internals)
 
-
 #### from the Running state to the Blocked state for the requesting process, and from the Ready state to the Running state for the selected next process
 1. The running process sends a system call via an interrupt.
 2. The CPU jumps into the interrupt handler, which is part of the operating system.
@@ -118,7 +117,7 @@ When a thread context-switches, it calls into the scheduler (the scheduler does 
 
 ## leetcode
 
-### String to Integer (atoi)
+### 8. String to Integer (atoi)
 consider the following cases:
 
 * leading whitespaces
@@ -399,6 +398,7 @@ e.g. given 5:
 - [ ] 假设有一个 dictionary 和一个字符的 set,找到从该字符集中能组成的存在于 dictionary 中的最长的 word
 
 ### graph/tree
+* leaf node: `!node.left && !node.right`
 * when cloning graph, use a map
 * spanning tree T of an undirected graph G is a subgraph that is a tree which includes all of the vertices of G
 * Kruskal's algorithm to find Minimal Spanning Tree
