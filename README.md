@@ -1,96 +1,5 @@
 # interview preparation
 
-## notes
-
-### deck shuffle
-**Fisher–Yates shuffle**: Go through the elements in order, swapping each element with a random element in the array that does not appear earlier than the element. O(n)
-
-### mutex
-a mutex is an integer that starts at 1. Whenever a thread needs to alter the array, it "locks" the mutex.  This causes the thread to wait until the number is positive and then decreases it by one. When the thread is done modifying the array, it "unlocks" the mutex, causing the number to increase by 1.
-
-### semaphore
-a semaphore's integer may start at a number greater than 1. The number at which a semaphore starts is the number of threads that may access the resource at once. Semaphores support "wait" and "signal" operations, which are analogous to the "lock" and "unlock" operations of mutexes.
-* deadlock prevention: assign an order to our locks and require that locks always be acquired in order
-​
-### rendering performance
-* 60FPS (16.66 ms/frame), and browser has housekeeping work, so all of your work needs to be completed inside 10ms. When you fail to meet this budget the frame rate drops, and the content judders on screen, referred to as **jank**
-
-* pixel pipeline: JavaScript -> style calculations -> layout -> paint -> composing
-* use `requestAnimationFrame` for visual changes instead of `setInterval`
-* move pure computational work to Web Workers
-* [rendering performance](https://developers.google.com/web/fundamentals/performance/rendering/?hl=en)
-* [optimize javascript execution](https://developers.google.com/web/fundamentals/performance/rendering/optimize-javascript-execution?hl=en)
-
-### A/B testing
-you have two versions of an element (A and B) and a metric that defines success. To determine which version is better, you subject both versions to experimentation simultaneously. In the end, you measure which version was more successful and select that version for real-world use
-
-​usually tested elements:
-
-* The call to action’s (i.e. the button’s) wording, size, color and placement
-​* Headline or product description,
-* Form’s length and types of fields,
-* Layout and style of website,
-* Product pricing and promotional offers,
-* Images on landing and product pages,
-* Amount of text on the page (short vs. long)
-
-### what resources a processes needs
-* an image of the executable machine code associated with a program
-* memory, which includes the executable code, process-specific data (input and output), a call stack (to keep track of active subroutines and/or other events), and a heap to hold intermediate computation data generated during run time
-* os descriptors of resources that are allocated to the process, e.g. file descriptors
-* security attributes, such as the process owner and the process' set of permissions
-* processor state (context), such as the content of registers and physical memory addressing. The state is typically stored in computer registers when the process is executing, and in memory otherwise
-
-### how context switching works
-say Thread A calls sched_yield() and is replaced by Thread B:
-
-1. Thread A enters the kernel, changing from user mode to kernel mode;
-2. Thread A in the kernel context-switches to Thread B in the kernel;
-3. Thread B exits the kernel, changing from kernel mode back to user mode.
-
-When a thread context-switches, it calls into the scheduler (the scheduler does not run as a separate thread - it always runs in the context of the current thread). The scheduler code selects a process to run next, and calls the switch_to() function
-
-* [context switch internals](http://stackoverflow.com/questions/12630214/context-switch-internals)
-
-#### from the Running state to the Blocked state for the requesting process, and from the Ready state to the Running state for the selected next process
-1. The running process sends a system call via an interrupt.
-2. The CPU jumps into the interrupt handler, which is part of the operating system.
-3. The OS saves all the registers of the running process into that process's entry of the process table.
-4. If another process is already waiting for the device to respond, the OS places the process into a waiting queue for that device. Otherwise, the process's request is sent to the device.
-5. The OS selects the next process to execute from the queue of those processes in the ready state. This is called the ready queue.
-6. The OS restores the registers to the values saved in the next process's entry of the process table.
-7. The OS returns to the program counter value stored in the next process's entry of the process table.
-
-#### from the Blocked state to the Ready state
-1. The OS saves the device's response in memory for the requesting process to use when it gets the CPU again.
-2. The OS moves the blocked process into the ready queue.
-3. If there are processes waiting for the device, the OS sends the next request to the device.
-4. The OS returns back to the process that was running at the time the interrupt occurred.
-
-### scheduling
-* the ready queue contains many processes, selection to choose one to start running is process scheduling.
-* **round robin**: each process is treated equally, when one process runs its time slice out, it is simply placed at the end of the ready queue, and the next process in line begins
-* choose by priority, problem: easily starve out the low-priority jobs
-* assign longer time slices to higher-priority jobs, but otherwise follow a round-robin strategy
-* choose jobs probabilistically, where higher-priority jobs have a higher priority of being selected
-
-### HTTP caching
-1. Use consistent URLs: if you serve the same content on different URLs, then that content will be fetched and stored multiple times
-2. Ensure the server provides a validation token (ETag): validation tokens eliminate the need to transfer the same bytes when a resource has not changed on the server.
-3. Identify which resources can be cached by intermediaries: those with responses that are identical for all users are great candidates to be cached by a CDN and other intermediaries.
-4. Determine the optimal cache lifetime for each resource: different resources may have different freshness requirements. Audit and determine the appropriate max-age for each one.
-5. Determine the best cache hierarchy for your site: the combination of resource URLs with content fingerprints, and short or no-cache lifetimes for HTML documents allows you to control how quickly updates are picked up by the client.
-6. Minimize churn: some resources are updated more frequently than others. If there is a particular part of resource (e.g. JavaScript function, or set of CSS styles) that are often updated, consider delivering that code as a separate file. Doing so allows the remainder of the content (e.g. library code that does not change very often), to be fetched from cache and minimizes the amount of downloaded content whenever an update is fetched.
-
-[source](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching)
-
-### DFS, BFS, IDDFS
-
- | time | space | when to use
-​DFS | O(b^d) | O(d) | graph/tree is not very big
-​BFS | O(b^d) | O(b^d) | space not issue, want the closest answer to the root
-​IDDFS | O(b^d) | O(bd) | need a BFS but not enough memory, slower performance is accepted
-
 ## given problem...
 1. clarify problem
     * consider an example that is rich enough but not tedious disambiguate expected result
@@ -138,11 +47,6 @@ check empty string case
 ### Longest Increasing Subsequence
 dp[i]: max ending here
 
-### Paint Fence
-* 2 dp: dp1[i]=dp2[i-1]; dp2[i]=(k-1)(dp1[i-1]+dp2[i-1])
-* recursion
-* queue of size 3?
-
 ### LRU Cache＊
 * O(n): Queue as List + HashTable ( Look up O(1) )
 * O(1): Queue as Double Linked List + Hashtable + dummy
@@ -153,11 +57,7 @@ dp[i]: max ending here
 * insert into a list
 
 ### 3Sum Smaller
-`for (var k = 2; k < nums.length; k++) { count += twoSumSmaller(nums, target - nums[k], k - 1); }`
-
-### N-Queens, N-Queens II
-* 1D array store Q pos info, validity check ALL 4
-* return when n === row
+`count += end - start;`
 
 ### Perfect Squares Solutions
 * dp: For each i, it must be the sum of some number (i - j*j) and a perfect square number (j*j)
@@ -177,14 +77,14 @@ dp[i]: max ending here
 * 2 ptr: start of the substring; current pos
 
 ### Coins in a Line
-* dp(i, j) = sum{Ai ... Aj} - min { dp(i+1, j), dp(i, j-1) }
+* `dp(i, j) = sum{Ai ... Aj} - min { dp(i+1, j), dp(i, j-1) }`
     * Ai..Aj left and your turn to pick
-* dp(i,j)=max{Ai+min{P(i+2,j), P(i+1,j-1)},Aj+min { P(i+1, j-1), P(i, j-2) } }
+* `dp(i,j)=max{Ai+min{P(i+2,j), P(i+1,j-1)},Aj+min { P(i+1, j-1), P(i, j-2) } }`
 * base cases: dp(1,1), dp(2,2), ... dp(n, n)
 
 ### Height/Level of a Binary Tree
 * [recursion](http://www.geeksforgeeks.org/write-a-c-program-to-find-the-maximum-depth-or-height-of-a-tree/)
-○ [iteration](http://www.geeksforgeeks.org/iterative-method-to-find-height-of-binary-tree/) BFS, level-wise traversal, dequeue all level at
+* [iteration](http://www.geeksforgeeks.org/iterative-method-to-find-height-of-binary-tree/) BFS, level-wise traversal, dequeue all level at
 once
 
 ### 78. Subsets
@@ -195,17 +95,11 @@ once
 ### 90. Subsets II
 think duplicate number as a special number, ans can be put in set 0 times, 1 times, .... k times where k equal the number of duplication
 
-### 111. Minimum Depth of Binary Tree
-check leaf node: iff 2 children
-
 ### 150. Evaluate Reverse Polish Notation
 stack
 
 ### 151. Reverse Words in a String
 edge cases
-
-### 102. Binary Tree Level Order Traversal
-pay attention to push order for left/right child when doing iterative dfs
 
 ### 360. Sort Transformed Array
 `a > 0, a === 0, a < 0`
@@ -219,6 +113,9 @@ pay attention to push order for left/right child when doing iterative dfs
 
 ### 89. Gray Code
 based on previous one, first half and second half, mid differ at highest bit
+
+### 155. Min Stack
+two stack, one keeps for every element, one for min elements
 
 ### 169. Majority Element
 https://discuss.leetcode.com/topic/17446/6-suggested-solutions-in-c-with-explanations
@@ -247,7 +144,7 @@ https://discuss.leetcode.com/topic/21217/java-o-n-and-o-1-extra-space
 
 
 ### 33. Search in Rotated Sorted Array
-* [generalized binar search method](https://discuss.leetcode.com/topic/53387/java-without-finding-the-pivot-with-detailed-explainations)
+* [generalized binary search method](https://discuss.leetcode.com/topic/53387/java-without-finding-the-pivot-with-detailed-explainations)
 
 ### 307. Range Sum Query - Mutable
 * update O(1), query O(n)
@@ -258,6 +155,63 @@ https://discuss.leetcode.com/topic/21217/java-o-n-and-o-1-extra-space
 
 ## note
 * [scalability](http://blog.csdn.net/v_july_v/article/details/7382693)
+
+### string
+* when deal with sentence, consider multiple spaces? punctuations?
+* for string**s**, check:
+    * case sensitive?
+    * white space
+    * punctuation
+    * char set
+
+* `strcspn`
+
+```javscript
+var strcspn = function (str1, str2) {
+  var hash = {};
+  for (var i = 0; i < str1.length; i++) {
+    if (!hash[str1[i]]) { hash[str1[i]] = i; }
+  }
+  var min = str1.length - 1;
+  for (var i = 0; i < str2.length; i++) {
+    if (hash[str2[i]] < min) {
+      min = hash[str2[i]]
+    }
+  }
+  return min;
+};
+```
+
+- [ ] abc2ddddefg 变成 abc1x24xdefg, abc5xefg 变成 abc1x5xefg, abc55555xefg 变成 abc5x5xefg
+- [ ] 给你一个字符串,统计字符出现次数。输入"AABBBCCC",输出"2A3B3C"
+- [ ] encode aaabbbbcccc->aaa4xb4xc,需要考虑3aaaaa->35xa
+    * suffix num with '/'
+- [ ] given decoder, write an encoder 3xe -> eee
+    * abc2ddddefg
+    * abc5xefg
+    * abc55555xefg
+- [x] Reverse Vowels of a String
+- [ ] Find Inserted Char of 2 (Shuffled/Unshuffled) Strings **
+- [ ] 1234567891011... Find nth char **
+- [x] Find common directory path
+- [ ] 实现任意大整数的加减乘除
+- [x] 给 string, 只包含{0,1,?}, ?可以代表 0 或者 1, 输出所有的组合. 例如"10?", 输出"100", "101"
+- [x] return comment contents in a str, including `//` and `/**/`
+    * `(\/\*(\*(?!\/)|[^*])*\*\/)|(\/\/.*)`
+- [x] remove duplicate lines of a file
+    * `cat filename | sort | uniq`
+    * *follow up* what if the file is very large which could not be held in the main memory
+- [ ] longest repeating substring, e.g. "abab" for "ababab"
+- [ ] You are given a String number containing the digits of a phone number (the number of digits, n, can be any positive integer) . To help you memorize the number, you want to divide it into groups of contiguous digits. Each group must contain exactly 2 or 3 digits. There are three kinds of groups: • Excellent: A group that contains only the same digits. For example, 000 or 77. Good: A group of 3 digits, 2 of which are the same. For example, 030, 229 or 166. Usual: A group in which all the digits are distinct. For example, 123 or 90. The quality of a group assignment is defined as 2 × (number of excellent groups) + (number of good groups) Divide the number into groups such that the quality is maximized. Design an efficient algorithm to return the solution that maximizes the quality. **
+- [ ] implement strstrp(String a, String b) returns index where any permutation of b is a substring of a. e.g. strstrp("hello", "lle") returns 1, O(n)
+    * http://coderchen.blogspot.com/2015/10/implement-function-strstrpstring-string.html
+- [ ] 4*10000=40000的string password minbimize length
+    1. backtracking
+- [ ] 输入是两个字符串，一个是 target，另一个是 guess，输出有多少个字符是完全对的，有多少个是对的字符，但是错的位置。例子：target: "ROADS"，guess: "BOARD"，输出 2 个完全对，2 个字符对但是位置不对。写代码。写完以后说，如果你现在在玩这个游戏，你最初只知道目标串的长度是多少，每次你提交一个 guess，你会得到上面那段程序的输出作为反馈，你如何尽可能少猜并且猜对？
+- [ ] Given two string S and T with same length, the distance is defined as the number of positions in which S and T have different characters. Your task is to minimize this distance, by swap at most 2 characters (which means at most 1 swap) in S. Return the two index. If it is not necessary to swap, return -1, -1
+- [ ] 给你一个password 假定6位， 有个function 每call 一次就给你一个triplet 是password 里的随即三位，order不变。比如google, 可能返回， ggl, goe, oog, ool, ........问如何最有效破译这个密码，写code
+- [ ] 给一个字符串数组,找出这样的字符串对(str1,str2),使得 1,两个字符串不包含 样的字符,2. 度乘积最大
+    ＊ 把每个单词化成26-bit的数字分别对应(a - z),出现了这位就置为1,没出现就这位就是0,存在 `Map< String, Integer >` ,这样 较的时候只要 `(a & b) == 0` 就说明没有重复,然后 key的 度求积
 
 ### array
 * replace only replace one instance if `/g` flag is not add in `RegExp`
@@ -464,58 +418,6 @@ return S
     O(lg n)
 - [ ] 生成palindrome number, 然后寻找最相近的palindrome number,最简单的了,不过要注意奇数个digits和偶数个digits
 
-### string
-* when deal with sentence, consider multiple spaces? punctuations?
-
-* `strcspn`
-
-```javscript
-var strcspn = function (str1, str2) {
-  var hash = {};
-  for (var i = 0; i < str1.length; i++) {
-    if (!hash[str1[i]]) { hash[str1[i]] = i; }
-  }
-  var min = str1.length - 1;
-  for (var i = 0; i < str2.length; i++) {
-    if (hash[str2[i]] < min) {
-      min = hash[str2[i]]
-    }
-  }
-  return min;
-};
-```
-
-- [ ] abc2ddddefg 变成 abc1x24xdefg, abc5xefg 变成 abc1x5xefg, abc55555xefg 变成 abc5x5xefg
-- [ ] 给你一个字符串,统计字符出现次数。输入"AABBBCCC",输出"2A3B3C"
-- [ ] encode aaabbbbcccc->aaa4xb4xc,需要考虑3aaaaa->35xa
-    * suffix num with '/'
-- [ ] given decoder, write an encoder 3xe -> eee
-    * abc2ddddefg
-    * abc5xefg
-    * abc55555xefg
-- [x] Reverse Vowels of a String
-- [ ] Find Inserted Char of 2 (Shuffled/Unshuffled) Strings **
-- [ ] 1234567891011... Find nth char **
-- [x] Find common directory path
-- [ ] 实现任意大整数的加减乘除
-- [x] 给 string, 只包含{0,1,?}, ?可以代表 0 或者 1, 输出所有的组合. 例如"10?", 输出"100", "101"
-- [x] return comment contents in a str, including `//` and `/**/`
-    * `(\/\*(\*(?!\/)|[^*])*\*\/)|(\/\/.*)`
-- [x] remove duplicate lines of a file
-    * `cat filename | sort | uniq`
-    * *follow up* what if the file is very large which could not be held in the main memory
-- [ ] longest repeating substring, e.g. "abab" for "ababab"
-- [ ] You are given a String number containing the digits of a phone number (the number of digits, n, can be any positive integer) . To help you memorize the number, you want to divide it into groups of contiguous digits. Each group must contain exactly 2 or 3 digits. There are three kinds of groups: • Excellent: A group that contains only the same digits. For example, 000 or 77. Good: A group of 3 digits, 2 of which are the same. For example, 030, 229 or 166. Usual: A group in which all the digits are distinct. For example, 123 or 90. The quality of a group assignment is defined as 2 × (number of excellent groups) + (number of good groups) Divide the number into groups such that the quality is maximized. Design an efficient algorithm to return the solution that maximizes the quality. **
-- [ ] implement strstrp(String a, String b) returns index where any permutation of b is a substring of a. e.g. strstrp("hello", "lle") returns 1, O(n)
-    * http://coderchen.blogspot.com/2015/10/implement-function-strstrpstring-string.html
-- [ ] 4*10000=40000的string password minbimize length
-    1. backtracking
-- [ ] 输入是两个字符串，一个是 target，另一个是 guess，输出有多少个字符是完全对的，有多少个是对的字符，但是错的位置。例子：target: "ROADS"，guess: "BOARD"，输出 2 个完全对，2 个字符对但是位置不对。写代码。写完以后说，如果你现在在玩这个游戏，你最初只知道目标串的长度是多少，每次你提交一个 guess，你会得到上面那段程序的输出作为反馈，你如何尽可能少猜并且猜对？
-- [ ] Given two string S and T with same length, the distance is defined as the number of positions in which S and T have different characters. Your task is to minimize this distance, by swap at most 2 characters (which means at most 1 swap) in S. Return the two index. If it is not necessary to swap, return -1, -1
-- [ ] 给你一个password 假定6位， 有个function 每call 一次就给你一个triplet 是password 里的随即三位，order不变。比如google, 可能返回， ggl, goe, oog, ool, ........问如何最有效破译这个密码，写code
-- [ ] 给一个字符串数组,找出这样的字符串对(str1,str2),使得 1,两个字符串不包含 样的字符,2. 度乘积最大
-    ＊ 把每个单词化成26-bit的数字分别对应(a - z),出现了这位就置为1,没出现就这位就是0,存在 `Map< String, Integer >` ,这样 较的时候只要 `(a & b) == 0` 就说明没有重复,然后 key的 度求积
-
 ### linked list
 * when deal with pointers in linked list, double check position when calling .next
 * linked list proper termination: .next = null
@@ -603,6 +505,99 @@ public static boolean validate(byte[] bytes) {
 - [ ] 写jump iterator类, 构造函数传  个普通的iterator, 然后实现next(), hasNext(). next()返回传 iterator的next().next(), 就是每次跳过 个元素输出. 然后再实现 个rotateIterator(), 构造函数传入List<Iterator<T>>, 实现next(), hasNext(). 例如:传 的三个iterator  的值分别是[[1,2,3],[4,5,6], [7,8]], 那rotateIterator的next()应该输出[1,4,7,2,5,8,3,6]. 就是竖着遍历每个iterator输出, 如果当前的iterator没有了, 就跳到下 个.
 - [ ] stable marriage problem
 - [ ] [maximum flow problem](http://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/)
+
+## notes
+
+### deck shuffle
+**Fisher–Yates shuffle**: Go through the elements in order, swapping each element with a random element in the array that does not appear earlier than the element. O(n)
+
+### mutex
+a mutex is an integer that starts at 1. Whenever a thread needs to alter the array, it "locks" the mutex.  This causes the thread to wait until the number is positive and then decreases it by one. When the thread is done modifying the array, it "unlocks" the mutex, causing the number to increase by 1.
+
+### semaphore
+a semaphore's integer may start at a number greater than 1. The number at which a semaphore starts is the number of threads that may access the resource at once. Semaphores support "wait" and "signal" operations, which are analogous to the "lock" and "unlock" operations of mutexes.
+* deadlock prevention: assign an order to our locks and require that locks always be acquired in order
+​
+### rendering performance
+* 60FPS (16.66 ms/frame), and browser has housekeeping work, so all of your work needs to be completed inside 10ms. When you fail to meet this budget the frame rate drops, and the content judders on screen, referred to as **jank**
+
+* pixel pipeline: JavaScript -> style calculations -> layout -> paint -> composing
+* use `requestAnimationFrame` for visual changes instead of `setInterval`
+* move pure computational work to Web Workers
+* [rendering performance](https://developers.google.com/web/fundamentals/performance/rendering/?hl=en)
+* [optimize javascript execution](https://developers.google.com/web/fundamentals/performance/rendering/optimize-javascript-execution?hl=en)
+
+### A/B testing
+you have two versions of an element (A and B) and a metric that defines success. To determine which version is better, you subject both versions to experimentation simultaneously. In the end, you measure which version was more successful and select that version for real-world use
+
+​usually tested elements:
+
+* The call to action’s (i.e. the button’s) wording, size, color and placement
+​* Headline or product description,
+* Form’s length and types of fields,
+* Layout and style of website,
+* Product pricing and promotional offers,
+* Images on landing and product pages,
+* Amount of text on the page (short vs. long)
+
+### what resources a processes needs
+* an image of the executable machine code associated with a program
+* memory, which includes the executable code, process-specific data (input and output), a call stack (to keep track of active subroutines and/or other events), and a heap to hold intermediate computation data generated during run time
+* os descriptors of resources that are allocated to the process, e.g. file descriptors
+* security attributes, such as the process owner and the process' set of permissions
+* processor state (context), such as the content of registers and physical memory addressing. The state is typically stored in computer registers when the process is executing, and in memory otherwise
+
+### how context switching works
+say Thread A calls sched_yield() and is replaced by Thread B:
+
+1. Thread A enters the kernel, changing from user mode to kernel mode;
+2. Thread A in the kernel context-switches to Thread B in the kernel;
+3. Thread B exits the kernel, changing from kernel mode back to user mode.
+
+When a thread context-switches, it calls into the scheduler (the scheduler does not run as a separate thread - it always runs in the context of the current thread). The scheduler code selects a process to run next, and calls the switch_to() function
+
+* [context switch internals](http://stackoverflow.com/questions/12630214/context-switch-internals)
+
+#### from the Running state to the Blocked state for the requesting process, and from the Ready state to the Running state for the selected next process
+1. The running process sends a system call via an interrupt.
+2. The CPU jumps into the interrupt handler, which is part of the operating system.
+3. The OS saves all the registers of the running process into that process's entry of the process table.
+4. If another process is already waiting for the device to respond, the OS places the process into a waiting queue for that device. Otherwise, the process's request is sent to the device.
+5. The OS selects the next process to execute from the queue of those processes in the ready state. This is called the ready queue.
+6. The OS restores the registers to the values saved in the next process's entry of the process table.
+7. The OS returns to the program counter value stored in the next process's entry of the process table.
+
+#### from the Blocked state to the Ready state
+1. The OS saves the device's response in memory for the requesting process to use when it gets the CPU again.
+2. The OS moves the blocked process into the ready queue.
+3. If there are processes waiting for the device, the OS sends the next request to the device.
+4. The OS returns back to the process that was running at the time the interrupt occurred.
+
+### scheduling
+* the ready queue contains many processes, selection to choose one to start running is process scheduling.
+* **round robin**: each process is treated equally, when one process runs its time slice out, it is simply placed at the end of the ready queue, and the next process in line begins
+* choose by priority, problem: easily starve out the low-priority jobs
+* assign longer time slices to higher-priority jobs, but otherwise follow a round-robin strategy
+* choose jobs probabilistically, where higher-priority jobs have a higher priority of being selected
+
+### HTTP caching
+1. Use consistent URLs: if you serve the same content on different URLs, then that content will be fetched and stored multiple times
+2. Ensure the server provides a validation token (ETag): validation tokens eliminate the need to transfer the same bytes when a resource has not changed on the server.
+3. Identify which resources can be cached by intermediaries: those with responses that are identical for all users are great candidates to be cached by a CDN and other intermediaries.
+4. Determine the optimal cache lifetime for each resource: different resources may have different freshness requirements. Audit and determine the appropriate max-age for each one.
+5. Determine the best cache hierarchy for your site: the combination of resource URLs with content fingerprints, and short or no-cache lifetimes for HTML documents allows you to control how quickly updates are picked up by the client.
+6. Minimize churn: some resources are updated more frequently than others. If there is a particular part of resource (e.g. JavaScript function, or set of CSS styles) that are often updated, consider delivering that code as a separate file. Doing so allows the remainder of the content (e.g. library code that does not change very often), to be fetched from cache and minimizes the amount of downloaded content whenever an update is fetched.
+
+[source](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching)
+
+### DFS, BFS, IDDFS
+
+ | time | space | when to use
+​DFS | O(b^d) | O(d) | graph/tree is not very big
+​BFS | O(b^d) | O(b^d) | space not issue, want the closest answer to the root
+​IDDFS | O(b^d) | O(bd) | need a BFS but not enough memory, slower performance is accepted
+
+
 
 ## checklist
 - [x] HTTP
