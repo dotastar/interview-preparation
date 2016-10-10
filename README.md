@@ -1,12 +1,13 @@
 # interview preparation
 
 ## given problem...
-1. clarify problem
+1. **clarify problem**
     * consider an example that is rich enough but not tedious disambiguate expected result
     * state and clarify key assumptions: expect result, any memory or performance requirement
     * clarify the function signature, input, output
 2. start with first solution that comes to mind run at least 1-2 examples
     * write steps down in order not to miss any step
+    * COMMENTS!!!
     * check edge cases
     * clean up with reasonable variable name
     * ask interviewer if any questions before refine
@@ -14,6 +15,7 @@
     * clarify assumption rinse, repeat compare the solution
     * analytic skills sound design
     * limitation corner cases error checking
+* email addr for thank you letter
 
 ### array
 * duplicate element?
@@ -34,6 +36,9 @@ consider the following cases:
 * overflow
 * invalid input
 
+### 12. Integer to Roman
+* keep minusing the largest number of and append
+
 ### Regular Expression Matching
 * [link 1](https://discuss.leetcode.com/topic/6183/my-concise-recursive-and-dp-solutions-with-full-explanation-in-c)
 * [link 2](http://articles.leetcode.com/regular-expression-matching)
@@ -48,9 +53,11 @@ check empty string case
 dp[i]: max ending here
 
 ### LRU Cache＊
-* O(n): Queue as List + HashTable ( Look up O(1) )
 * O(1): Queue as Double Linked List + Hashtable + dummy
     * head & tail to avoid check null [Link](https://leetcode.com/discuss/20139/java-hashtable-double-linked-list-with-touch-of-pseudo-nodes)
+* disadvantage
+    * hard to track of the time each page was last used in all the registers
+    * implementation difficult
 
 ### Merge Intervals
 * merge two
@@ -60,7 +67,7 @@ dp[i]: max ending here
 `count += end - start;`
 
 ### Perfect Squares Solutions
-* dp: For each i, it must be the sum of some number (i - j*j) and a perfect square number (j*j)
+* dp: For each i, it must be the sum of some number `(i - j*j)` and a perfect square number `(j*j)`
 * BFS
 * Mathematics: Lagrange's four-square theorem
 
@@ -70,7 +77,7 @@ dp[i]: max ending here
     * two ptr init pos diff
 
 ### Missing Ranges
-* push start - 1 and end - 1, check diff between nums[i + 1] and nums[i] ?= 1 ?= 2 ?> 2
+* push start - 1 and end - 1, check diff between `nums[i + 1]` and `nums[i]` `=== 1`, `=== 2`, `> 2`
 
 ### Longest Substring with At Most Two Distinct Characters 
 * hash table: record occurrence
@@ -79,8 +86,17 @@ dp[i]: max ending here
 ### Coins in a Line
 * `dp(i, j) = sum{Ai ... Aj} - min { dp(i+1, j), dp(i, j-1) }`
     * Ai..Aj left and your turn to pick
-* `dp(i,j)=max{Ai+min{P(i+2,j), P(i+1,j-1)},Aj+min { P(i+1, j-1), P(i, j-2) } }`
-* base cases: dp(1,1), dp(2,2), ... dp(n, n)
+* `dp(i,j) = max(Ai + min(P(i+2, j), P(i+1, j-1)), Aj + min(P(i+1, j-1), P(i, j-2)))`
+* base cases: `dp(1,1)`, `dp(2,2)`, ... `dp(n, n)`
+
+### [Coin Change](http://www.geeksforgeeks.org/dynamic-programming-set-7-coin-change/)
+```javascript
+for (const coin of coins)
+    for (let i = coin; i <= target; i++)
+        dp[i] += dp[i - coin];
+```
+
+### [Optimal Strategy for a Game](http://www.geeksforgeeks.org/dynamic-programming-set-31-optimal-strategy-for-a-game/)
 
 ### Height/Level of a Binary Tree
 * [recursion](http://www.geeksforgeeks.org/write-a-c-program-to-find-the-maximum-depth-or-height-of-a-tree/)
@@ -152,7 +168,6 @@ https://discuss.leetcode.com/topic/21217/java-o-n-and-o-1-extra-space
 * segment tree update O(lg n) query O(lg n)
 * - [x] range minimum query: [segment tree](http://www.geeksforgeeks.org/segment-tree-set-1-range-minimum-query/)
 
-
 ## note
 * [scalability](http://blog.csdn.net/v_july_v/article/details/7382693)
 
@@ -166,7 +181,7 @@ https://discuss.leetcode.com/topic/21217/java-o-n-and-o-1-extra-space
 
 * `strcspn`
 
-```javscript
+```javascript
 var strcspn = function (str1, str2) {
   var hash = {};
   for (var i = 0; i < str1.length; i++) {
@@ -182,6 +197,9 @@ var strcspn = function (str1, str2) {
 };
 ```
 
+- [ ] implement `indexOf`, '\*' can match other letter
+- [ ] Given two string S and T with same length, the distance is defined as the number of positions in which S and T have different characters. Your task is to minimize this distance, by swap at most 2 characters (which means at most 1 swap) in S. Return the two index. If it is not necessary to swap, return -1, -1
+- [ ] [palindromic substrings of a given string](http://www.geeksforgeeks.org/find-number-distinct-palindromic-sub-strings-given-string/)
 - [ ] abc2ddddefg 变成 abc1x24xdefg, abc5xefg 变成 abc1x5xefg, abc55555xefg 变成 abc5x5xefg
 - [ ] 给你一个字符串,统计字符出现次数。输入"AABBBCCC",输出"2A3B3C"
 - [ ] encode aaabbbbcccc->aaa4xb4xc,需要考虑3aaaaa->35xa
@@ -190,11 +208,28 @@ var strcspn = function (str1, str2) {
     * abc2ddddefg
     * abc5xefg
     * abc55555xefg
-- [x] Reverse Vowels of a String
-- [ ] Find Inserted Char of 2 (Shuffled/Unshuffled) Strings **
-- [ ] 1234567891011... Find nth char **
-- [x] Find common directory path
 - [ ] 实现任意大整数的加减乘除
+- [ ] 1234567891011... Find nth char
+- [x] Find common directory path
+- [x] Reverse Vowels of a String
+- [ ] input: string s, k, output: subsequence of size = k which has smallest lexical order. e.g. pineapple, 3 -> ale
+-[x] convert 20th Oct 2052; 1st Jun 1996 to 2052-10-20, 1996-6-01
+
+```javascript
+function convert (date) {
+    const [day, month, year] = date.trim().split(' ');
+
+    const months = {
+        'Jan': '01',
+        // ...
+    };
+
+    const rawDay = day.match(/^\d+/)[0];
+
+    return [year, months[month], rawDay.length === 1 ? `0${rawDay}` : rawDay].join('-')
+}
+```
+
 - [x] 给 string, 只包含{0,1,?}, ?可以代表 0 或者 1, 输出所有的组合. 例如"10?", 输出"100", "101"
 - [x] return comment contents in a str, including `//` and `/**/`
     * `(\/\*(\*(?!\/)|[^*])*\*\/)|(\/\/.*)`
@@ -202,13 +237,10 @@ var strcspn = function (str1, str2) {
     * `cat filename | sort | uniq`
     * *follow up* what if the file is very large which could not be held in the main memory
 - [ ] longest repeating substring, e.g. "abab" for "ababab"
+    * http://www.geeksforgeeks.org/longest-repeating-subsequence/
 - [ ] You are given a String number containing the digits of a phone number (the number of digits, n, can be any positive integer) . To help you memorize the number, you want to divide it into groups of contiguous digits. Each group must contain exactly 2 or 3 digits. There are three kinds of groups: • Excellent: A group that contains only the same digits. For example, 000 or 77. Good: A group of 3 digits, 2 of which are the same. For example, 030, 229 or 166. Usual: A group in which all the digits are distinct. For example, 123 or 90. The quality of a group assignment is defined as 2 × (number of excellent groups) + (number of good groups) Divide the number into groups such that the quality is maximized. Design an efficient algorithm to return the solution that maximizes the quality. **
 - [ ] implement strstrp(String a, String b) returns index where any permutation of b is a substring of a. e.g. strstrp("hello", "lle") returns 1, O(n)
     * http://coderchen.blogspot.com/2015/10/implement-function-strstrpstring-string.html
-- [ ] 4*10000=40000的string password minbimize length
-    1. backtracking
-- [ ] 输入是两个字符串，一个是 target，另一个是 guess，输出有多少个字符是完全对的，有多少个是对的字符，但是错的位置。例子：target: "ROADS"，guess: "BOARD"，输出 2 个完全对，2 个字符对但是位置不对。写代码。写完以后说，如果你现在在玩这个游戏，你最初只知道目标串的长度是多少，每次你提交一个 guess，你会得到上面那段程序的输出作为反馈，你如何尽可能少猜并且猜对？
-- [ ] Given two string S and T with same length, the distance is defined as the number of positions in which S and T have different characters. Your task is to minimize this distance, by swap at most 2 characters (which means at most 1 swap) in S. Return the two index. If it is not necessary to swap, return -1, -1
 - [ ] 给你一个password 假定6位， 有个function 每call 一次就给你一个triplet 是password 里的随即三位，order不变。比如google, 可能返回， ggl, goe, oog, ool, ........问如何最有效破译这个密码，写code
 - [ ] 给一个字符串数组,找出这样的字符串对(str1,str2),使得 1,两个字符串不包含 样的字符,2. 度乘积最大
     ＊ 把每个单词化成26-bit的数字分别对应(a - z),出现了这位就置为1,没出现就这位就是0,存在 `Map< String, Integer >` ,这样 较的时候只要 `(a & b) == 0` 就说明没有重复,然后 key的 度求积
@@ -224,18 +256,80 @@ function replacer(match, p1, p2, p3, offset, string) {
 var newString = 'abc12345#$*%'.replace(/([^\d]*)(\d*)([^\w]*)/, replacer);
 ```
 
-* when using regex, don’t miss ^ and $
+* when using regex, don’t miss `^` and `$`
 * when use reduce, always provide an initial value, for empty array case
 * check boundary index valid or not when accessing
 * rotate binary search: find the rotate pivot and take rotation into account and do ordinary binary search
-* maximum subarray: divide and conquer, dp with dp[i + 1] is the max subarray sum ending in A[i]
-    1. check if there is a subarray sum equals x
-    2. follow-up: check if there is a sub-rectangle sum equals x in matrix
-    3. http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=164888&fromuid=109727
-
+* maximum subarray: divide and conquer, `dp` with `dp[i + 1]` is the max subarray sum ending in `A[i]`
 * [Find common elements in N sorted arrays with no extra space](http://stackoverflow.com/questions/15036821/find-common-elements-in-n-sorted-arrays-with-no-extra-space)
+* iterator, proceed in `hasNext`
 
-- [ ] 给一个array 和一个 target, 求出 array里有几组tuple相加是小于等于target的 **
+- [ ] task序列ABBABBC, 和相同task的最小interval. 例如interval=3, 则BB运行时间为5. 写一个函数输入task序列和interval, 输出运行时间
+    * *follow up*: 写一个调度函数，输入task序列和interval，输出task最优执行序列
+- [ ] Count the number of distinct pairs such that their sum is <= X
+    * follow up: distinct triple pairs distinct k pairs
+- [ ] rearrange array so the same characters are seperated by at least minDistance, heap
+    1. http://articles.leetcode.com/2010/05/here-is-another-google-phone-interview.html
+    2. http://www.geeksforgeeks.org/rearrange-a-string-so-that-all-same-characters-become-at-least-d-distance-away/
+- [ ] design random queue
+- [ ] int[] array, add + and * to maximize value
+    * dp
+- [ ] input: sorted array，num, output: number of occurance of num
+- [ ] input: unsorted array, output: num which has odd number of occurance
+- [ ] given a list of player, each of them can choose not playing the game, playing with a specific player(preference) or playing but does not care about the preference. find a team with five players that meet all constraint
+- [ ] 就是一圈zombies，给你一 个starting point，然后每隔k步你shoot一个zombie，完后依次下去直到剩下一个 zombie，让你输出最后剩下的zombie
+- [ ] input: pool size, pipe[], event array, output: time to fill the pool
+    * consider situation that till end the pool if not filled
+event array | Action | Time | PipiID
+--- | --- | --- | ---
+ | start | 10 | 1
+ | end | 110 | 1
+
+- [x] input: int[] array, n, output: subarrays which numbers were neighbours. e.g. [1,2,3] -> [1],[2],[3],[1,2],[2,3], [1,2,3]
+
+```javascript
+const continuous = (arr) => {
+    const stack = [[[], 0]];
+    const ans = [];
+
+    while (stack.length > 0) {
+        const [curr, start] = stack.shift();
+
+        ans.push(curr);
+
+        if (curr.length === 0) {
+            for (let i = start; i < arr.length; i++) {
+                stack.push([curr.concat([arr[i]]), i + 1]);
+            }
+        } else if (start < arr.length) {
+            stack.push([curr.concat([arr[start]]), start + 1]);
+        }
+    }
+
+    return ans;
+}
+```
+
+- [x] input: int[] array, even number: num, odd number: frequency, output: interator. e.g.[3, 8, 0, 12, 2, 9] -> [8, 8, 8, 9, 9]
+
+```javascript
+function* odd(arr) {
+    for (let i = 0; i < arr.length; i += 2) {
+        const freq = arr[i];
+        const num = arr[i + 1];
+
+        for (let i = 0; i < freq; i++) {
+            yield num;
+        }
+    }
+}
+```
+
+- [ ] input: height[], output: for each i, return nearest higher person's height after i. e.g. [3, 6, 7, 2, 3] -> [6, 7, null, 3, null]
+    * O(n)
+- [x] input: int[] array, target. output: seperate part sum === target e.g. [1,5,0,6], 21: 15 + 0 + 6 = 21; [6,3,1,0,5], 78: 63 + 10 + 5 = 78
+- [x] input: array, target, output: number of subarrays has sum <= target
+    ＊ Greedy Algorithm, using max heap, deal with characters w/ most counts first
 - [x] unsorted array remove duplicates
 - [x] [implement circular queue](https://www.careercup.com/question?id=14133666)
 - [x] [longest common subsequence](http://www.geeksforgeeks.org/dynamic-programming-set-4-longest-common-subsequence/)
@@ -244,7 +338,6 @@ var newString = 'abc12345#$*%'.replace(/([^\d]*)(\d*)([^\w]*)/, replacer);
     * O(n): DP, two temp array
     * O(1) space: count all 1, and all 0, traverse array, if encounter 0, add 1 to , else sminus 1
 - [ ] 求 array 里 unordered pair 的数量(前一个数比后一个数大)比如{1, 3, 2}里面有一个(3, 2), {1, 2, 3}里面没有, {3, 2, 1}里面有三个(3, 2) (3, 1) (2, 1)
-- [ ] 给一个 int[] array, e.g {1,5,0,6}和一个 int target,e.g. target = 21; 问是否存在某种分法把 array 分成几部分,每部分看成一个 int,这几部分加起来等于 target。 e.g. {1,5}{0}{6},三部分加起来是 21。{1,5}{0,6}也是 21, [6,3,1,0,5]  target=78, 这个return True. 63+10+5 = 78 如果target= 636 return True. 631+0+5 = 636
 - [x] Given a sorted array of floats, find the index of the number closest to x
 - [ ] 一群人排队,每个人有(height, Tvalue), height 表示身高,Tvalue 表示 前面有几个比当前人身高高的人 然后顺序打乱,重新排队,还得复原以前的队列
     * Sort by Tvalue, then height, in increasing order. Then iterate from the beginning, insert value if Tvalue > 0
@@ -268,20 +361,12 @@ var newString = 'abc12345#$*%'.replace(/([^\d]*)(\d*)([^\w]*)/, replacer);
 - [ ] find the most popular number in an array of interger. The 'popular number' is defined as the number occurs more than n/4, where n is the length of array **
 - [ ] minimum number of elements in an array, the sum of which should be larger than 1% of total sum, O(n)
 - [ ] one sorted array. find the number of appearence of a given number
-- [ ] rearrange array so the same characters are seperated by at least minDistance, heap
-    1. http://articles.leetcode.com/2010/05/here-is-another-google-phone-interview.html
-    2. http://www.geeksforgeeks.org/rearrange-a-string-so-that-all-same-characters-become-at-least-d-distance-away/
-    ＊ Greedy Algorithm, using max heap, deal with characters w/ most counts first
 - [x] vote log [{ candidate, time } ...], findWinner at given time
     * *follow up*: first k winners
     * hashtable + quickselect
     * priority queue
+- [ ] input: file with n entries of [customer, page numer], output: most popular page numer
 - [ ] 给一个array比如[4,2,1,3,5],根据这个array现在我们能有了一个新的array => 每个数是在原array里, 在它左边的所有比它大的number的个数,就是[0,1,2,1,0]. 题目是现在给了这个[0,1,2,1,0]要求原array, 原来array的range是1~n
-- [ ] Give flights with start and end time. Find maximum number of simultaneous flights
-- [ ] Count the number of distinct pairs such that their sum is <= X
-    * follow up: distinct triple pairs distinct k pairs
-- [ ] design random queue
-    * *follow up* design random priority queue
 - [x] given an array and a size k, find a size k subset with minimum max and min diff in the subset
     * sort, then sliding window with a queue O(nlogn)
 - [x] unknown music play list with unique ids, given log, determine whether shuffle or random
@@ -296,16 +381,11 @@ var newString = 'abc12345#$*%'.replace(/([^\d]*)(\d*)([^\w]*)/, replacer);
     * trie
     * map reduce
 - [ ] infinity number of object which has state true/false, init false, implement isToggled(i), toggle(start, end)
-- [ ] files has dependency, find the right order of install
-    ＊ topological sort
 - [x] given a lot of words, find a smallest set in which sum of frequencies larger than t
     * priority queue
     * quick select and calculate left sum
 - [ ] given a list of numbers and signature (increase, increase, decrease), print the number that fits the signature
     * record last decreasing point, insert next number before last descreasing point
-- [ ] Stock + House robber 结合题 可以无限买卖,但卖了之后要至少隔一天才能买
-    ＊ hold[ i ] = max(hold[i-1], unhold[i-2] - price[ i ])
-    ＊ unhold[ i ] = max(uphold[i-1], hold[i-1] + price[ i ])
 - [ ] 两个string 的 list,找出只在某个list 出现的string
     * *follow up* 扩展到k个list
 - [ ] given morse codes w/o spaces, output all possibilities **
@@ -316,47 +396,76 @@ var newString = 'abc12345#$*%'.replace(/([^\d]*)(\d*)([^\w]*)/, replacer);
     * *follow up* duplicate primes given
 
 ### matrix
-- [x] Design a algorithm to initialize the board of Candy Crush Saga. With M x N board, Q types of candies
-    * dp, `while` loop to exclude top and left same 2 candy
-- [x] 问一个 word grid 给一个词,返回有多少个 path 可以组成所给定的词
-- [ ] 给以下矩阵序列 level 0: 0, level 1: 1,2; 3,4 level 2: 5,6,7,8; 9,10,11,12; 13,14,15,16; 17,18,19,20, 写个转换方程 int get(int level, int i, int j) **
+- [ ] check numbers on antidiagonal are the same
+    * *follow up* matrix is too big for RAM
+- [ ] random maze generator, no closing space
+- [ ] given matrix, each node is a computer, cost to transfer a file is the distance, all computers are recivers, what's the cost
+- [ ] 给一个图 让求图中所有的正方形, design own data structure
 - [ ] A circus is designing a tower routine consisting of people standing atop one another’s shoulders. For practical and aesthetic reasons, each person must be both shorter and lighter than the person below him or her. Given the heights and weights of each person in the circus, write a method to compute the largest possible number of people
-- [ ] Print a spiral array **
-e.g. given 5:
-25 24 23 22 21
-10 09 08 07 20
-11 02 01 06 19
-12 03 04 05 18
-13 14 15 16 17
-- [ ] random maze generator. 其实就是在一个 2d 空间画墙但不能允许有封闭空间
-- [ ] 2d array of char, 'X' cannot go, ' ' means grass, given x,y remove grass and return back (code see picture)
+- [ ] 2d array of char, 'X' cannot go, ' ' means grass, given x,y remove grass and return back
 - [ ] 一个二维数组代表了一个岛. 周围都是海, 岛的左侧和上侧通向Pacific, 右侧和下侧通向Atlantic. 每个数字都代表了那个位置的海拔高度. 现在下雨了, 雨只有从海拔高的地儿能流向海拔低或者一样的地儿. 返回岛上的分水岭的点
-- [ ] 2d matrix trap rain water
+- [ ] 第二题输入一个二维整数数组，表示一个格点地图，数组的每一个元素表示相应格点的海拔。如果在某一个格点倒水，则水会等概率的流向临近的海拔更低的格点。求在某一个格点倒水，最后水流到地图的最左边或者最下边的比例。
 - [ ] 2D matrix with 'x' and 'o', find island number
     * *follow up* 如果是大地圖怎麼處理, 要你切 map, 考慮每個 submap 之間的關係-google
     * *follow up* parallel process
     * *follow up* 如果他現在要新增島到地圖上, 請回傳最新的 count, ex: int add(int x, int y), the function should return the new count
     * *follow up* 這個 function 能不能做到  O(N*N) 還要好? (N為 map 邊 )
-    * 當初在 count islands 的時候把每個 island 都建成一顆 tree, 所以再判斷新加上去的 island 周圍的時候, 只要判斷周圍的 island 是不是有 
- ancestor O(lgN) 如果是分開的兩個島, 現在被新的島串起來了的話, 就將兩顆 tree 接起來就好
+    * 當初在 count islands 的時候把每個 island 都建成一顆 tree, 所以再判斷新加上去的 island 周圍的時候, 只要判斷周圍的 island 是不是有 ancestor O(lg n) 如果是分開的兩個島, 現在被新的島串起來了的話, 就將兩顆 tree 接起來就好
     * union find
-- [ ] given a budge and a matrix with matrix[i][j] a price, find maximum submatrix
-    * O(n^4)
-- [ ] given matrix, each node is a computer, cost to transfer a file is the distance, all computers are recivers, what's the cost
-- [ ] update and query matrix
-    * Binary Indexed Tree -> Query & Update O(lgn) ?
-- [ ] tic-tac-toe all possible state
-- [ ] 给一个图 让求图中所有的正方形, design own data structure
+- [ ] implement a sliding puzzle
+    * solve a sliding puzzle
+- [ ] sparse vector dot multiplication
+    * too big for RAM: only store non-zero element position
+    * if position sorted: iterate shorter one, binary search find each corresponding index O(M*logN)
+    * if position sorted: two pointers O(M + N)
+- [x] 2d matrix trap rain water
+- [x] tic-tac-toe all possible state
+- [x] level 0: 0, level 1: 1,2; 3,4 level 2: 5,6,7,8; 9,10,11,12; 13,14,15,16; 17,18,19,20, int get(int level, int i, int j)
+    * geometric sequences sum = a*(r^n - 1)/(r - 1)
+- [x] Design a algorithm to initialize the board of Candy Crush Saga. With M x N board, Q types of candies
+    * dp, `while` loop to exclude top and left same 2 candy
+- [x] 问一个 word grid 给一个词,返回有多少个 path 可以组成所给定的词
+- [x] maximum sum matrix
+    * naive O(n^4)
+    * loop different left and right boundary, reduce row sum to 1D array, then use Kadane’s algorithm, O( n^3 )
+- [x] input n, output a spiral array from n*n to 1
+- [x] input: n*m matrix, x, y, width, height, output: draw rect at (x, y) with width and height
+
+```javascript
+const draw = (n, m, x, y, width, height) => {
+    const matrix = Array.from({ length: n }, () => Array.from({ length: m}, () => 0));
+
+    for (let i = 0; i < width; i++) {
+        matrix[y][x + i] = 1;
+        matrix[y + height - 1][x + i] = 1;
+    }
+
+    for (let j = 1; j < height - 1; j++) {
+        matrix[y + j][x] = 1;
+        matrix[y + j][x + width - 1] = 1;
+    }
+
+    return matrix;
+}
+```
 
 ### dictionary
-- [ ] 假设有一个 dictionary 和一个字符的 set,找到从该字符集中能组成的存在于 dictionary 中的最长的 word
+- [ ] input: dictionary, letter set, output: longest word composed from letter set which exists in the dict
+- [ ] input: dictionary containing names of format "w1 w2 w3 ... wk", query "p1 p2 ... pm", output: query === subsequence of a name
 
 ### graph/tree
 * leaf node: `!node.left && !node.right`
 * when cloning graph, use a map
 * spanning tree T of an undirected graph G is a subgraph that is a tree which includes all of the vertices of G
 * Kruskal's algorithm to find Minimal Spanning Tree
+    1. Sort all the edges in non-decreasing order of their weight.
+    2. Pick the smallest edge. Check if it forms a cycle with the spanning tree formed so far. If cycle is not formed, include this edge. Else, discard it.
+    3. Repeat step#2 until there are (V-1) edges in the spanning tree.
 * [Morris inorder tree traversal](http://stackoverflow.com/questions/5502916/explain-morris-inorder-tree-traversal-without-using-stacks-or-recursion)
+* [check a tree is a subtree of another tree](http://www.geeksforgeeks.org/check-binary-tree-subtree-another-binary-tree-set-2/)
+    1. Find inorder and preorder traversals of T, store them in two auxiliary arrays inT[] and preT[].
+    2. Find inorder and preorder traversals of S, store them in two auxiliary arrays inS[] and preS[].
+    3. If inS[] is a subarray of inT[] and preS[] is a subarray preT[], then S is a subtree of T. Else not.
 
 ```
 sort the edges of G in increasing order by length
@@ -367,81 +476,135 @@ for each edge e in sorted order
 return S
 ```
 
-- [x] merge quad tree
-- [x] binary tree & operation
-- [x] Deep Copy Tree
-- [x] Mirror Binary Tree
-- [ ] serialize an N-ary Tree **
-- [ ] 求binary tree 所有从根开始到叶子的所有路径和, no recursion **
+- [ ] convert expression to tree. e.g. 1 + (2 * 3)
+- [ ] given BT, find the lowest common accestors of deepest leaves. e.g. 1,2,3,null,null,5,6 -> 3; 1,2,3,4,null,5,6 -> 1
 - [ ] 社交网络中,如何实现好友推荐。抽象成图,然后找出共同好友最多的那个人
     * topological sort
-- [x] use bfs to print all path from root to leaf
+- [ ] Flight passes, find path from a city to another city; what if loop, n to 1 city
+    * DFS
+- [ ] List of boarding passes, return Travel Itinerary
+    * dfs
 - [ ] return duplicated subtree
     1. bfs store each subtree in list, check whether 2 trees are the same
     * if the binar tree is given a stream
     * traversal once
-- [ ] check whether A is B's subtree
-- [ ] Flight passes, find path from a city to another city; what if loop, n to 1 city
+- [ ] 给你一个node,包含getId 和 setId,children由 iterator<node>提供node的id 如果为null(Integer 类型) 或者为负都是invalid。并且互相之间的id都是没有重复。要求遍历树,将所有的invalid节点找出然后赋给他们不重复的正数
+- [ ] 假设某个company在不同国家都有office,每个国家的office,如果是当地的假期,就可以放假了。假设可以查询任意航班的信息,每个星期只能呆在一个地 ,只有周末的时候才能去别的国家。找放假天数最多的schedule
+    * `dp[month][country]`
+- [ ] input: n cities, flying time from one to another, vacation array, limit of flying time, output: schedule
+- [x] serialize an N-ary Tree
+
+```javascript
+const serialize = (root) => {
+    if (!root) return 'null';
+    let base = root.val + ',' + root.children.length;
+    if (root.children.length > 0) base += ',' + root.children.map(c => serialize(c)).join(',');
+
+    return base;
+}
+
+const deserialize = (str) => {
+    if (str === 'null') return null;
+
+    const data = str.split(',').map(e => Number(e));
+    const stack = [];
+
+    while (data.length > 0) {
+        const length = data.pop();
+        const ele = {
+            val: data.pop(),
+            children: [],
+        };
+
+        for (let i = 0; i < length; i++) {
+            ele.children.push(stack.pop());
+        }
+
+        stack.push(ele);
+    }
+
+    return stack[0];
+}
+```
+
+- [x] fill tank with min steps. e.g. tank: 80L, containers: 1,3,5,6,25 L, soln: 4: 5, 25, 25, 25
+    * BFS
+- [x] [the good node](http://yuanhsh.iteye.com/blog/2200515)
+    * union find
+- [x] merge quad tree
+- [x] binary tree & operation
+- [x] Deep Copy Tree
+- [x] Mirror Binary Tree
+- [x] all sum of binary tree from root to leaf, no recursion
+    * DFS
+- [x] use bfs to print all path from root to leaf
 - [x] design setManager, setPeer, queryManager
 - [x] given players, 2 players a time, print all possibilities of rounds, data structure
     * postorder traversal
-- [ ] bst add, find, delete
-- [ ] determine binary tree is complete tree
+- [x] determine binary tree is complete tree
+    * level order traversal, every level except the last one cannot has null val
+    * DFS, set flag when first meet (deepest - 1) level node
 - [x] given n cities and (n - 1) roads, find average path length, e.g. SF-SD-LA -> (SF-SD + SF-LA + SD-LA)/3
 - [x] bst most frequent integer 
     * inorder traversal
-- [ ] List of boarding passes, return Travel Itinerary
-    * dfs
-- [ ] 0 是障碍物,2是食物,1是路径。 要求着到可以走到所有食物一次最短的点
-- [ ] hamming distance between a and b, a, b < 2^64
-    * *follow up*: how to speed up 如果你 这个 法,但是ram只有2g,那会发生什么情况
-    1. t = a ^ b, for (t != 0) {t = t ^ (t - 1); count++ }
-    2. 2. 可以 2^32的字典要4G空间,这样 两次就好
-    3. 3. using swap space, RAM = 2 + 4 = 6, so no problem
-- [ ] given height, how many full binary tree are there
-- [ ] generate full binary trees of height n
-- [ ] 给你一个node,包含getId 和 setId,children由 iterator<node>接 提供。node  的id 如果为null(Integer 类型) 或者为负都是invalid。并且互相之间的id都是 有重复。要求遍历树,将所有的invalid节点找出然后赋给他们不重复的正数
-- [ ] 给你一组Treenode,他们每个有id, parentId, value,让你输出所有subtree的sum of value **
-- [ ] 假设某个company在不同国家都有office,每个国家的office,如果是当地的假期,就可以放假了。假设可以查询任意航班的信息,每个星期只能呆在 个地 ,只有周末的时候才能 去别的国家。找 个放假天数最多的schedule
+- [x] given height, how many full binary tree are there? generate full binary trees of height n
+    * h = 0: 1; h = 1: 1; h = 2: 3; h = 3: 21; h = 4: 651; h = 5: 457653
+    * h(n) = h(n - 1)*h(n - 1) + 2*h(n - 1)*(h(0) + h(1) + ... + h(n - 2))
+    * for level n, add root node to previous (n - 1) trees
+        * case 1: both left and right subtrees has deepest n - 1: h(n - 1)*h(n - 1)
+        * case 2: only left has deepest n - 1, right loops from deepest 0 to deepest n - 2: h(n - 1)*(h(0) + h(1) + ... + h(n - 2))
+        * case 3: mirror of case 2
 
 ### number
 * consider neg, 0, pos
 * integer division, think about negative numbers, truncation
-
 * [Segregate Even and Odd numbers](http://www.geeksforgeeks.org/segregate-even-and-odd-numbers/)
 
-- [ ] public float sqrt(float num, int precision)
-- [ ] good number is defined as addition of 2 cubic of a number, given n, list all good numbers <= n
-- [ ] Calculate log(x)
-- [ ] given a number e.g. 1112223334445556677888..., find the missing 2 numbers
-- [ ] find all factors of n
-    O(lg n)
 - [ ] 生成palindrome number, 然后寻找最相近的palindrome number,最简单的了,不过要注意奇数个digits和偶数个digits
+- [ ] first n prime number
+- [x] input: polite number, output: politeness (number of ways it can be expressed as the sum of consecutive integers)
+    * is the number of odd divisors of the number
+    * decomposing the number into its prime factors, taking the powers of all prime factors greater than 2, adding 1 to all of them, multiplying the numbers thus obtained with each other and subtracting 1
+- [x] check whether two are gray code
+
+```java
+byte x = (byte)(a^b);return x!=0 && ((byte)(x&(x-1)==0));
+```
+
+- [x] public float sqrt(float num, int precision)
+- [x] Calculate log(x)
+- [x] good number is defined as addition of 2 cubic of a number, given n, list all good numbers <= n
+- [x] given a number e.g. 1112223334445556677888..., find the missing 2 numbers
+- [x] find all factors of n
+    * O(lg n)
+- [x] sqrt(x, precision)
 
 ### linked list
 * when deal with pointers in linked list, double check position when calling .next
 * linked list proper termination: .next = null
 
 - [x] insert a number in a sorted singly linked lists
-- [x] given a doubly linked list, and an array containing list nodes, find component number in the array, e.g. A-B-C-D-E. [A E D] -> 2: A, E-D
-    * put array into set, traversal set, for a given node, if neighbours in set, delete
+- [x] given a **doubly linked list**, and an array containing list nodes, find component number in the array, e.g. A-B-C-D-E. [A E D] -> 2: A, E-D
+    * put [A E D] into set, traversal set, for a given node, if neighbours in set, delete
 
 ### bit manipulation
 * get set bit: diff &= -diff;
 
-- [ ] binary watch：上边是小时，下边是分钟，最左边最significant，最右边为1。给你数字n，return所有可能的时间，以string为表达形式
-
 ### else
+- [ ] what's the reducer method in Map-Reduce
+- [ ] given two date w/ day, month, year, calculate difference
+- [ ] implement `diff`
+- [ ] 给画布上的n个线段,问怎么画最快(移动画笔会浪费时间)
+    * sort lines first (based on two points and length)
+- [ ] stable marriage problem
+- [ ] [maximum flow problem](http://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/)
 - [x] check if a point is within a polygon
     * ray casting to right
 - [ ] n 台机器做 web crawler,如何保证每个网页只被 download 一次,就是 n 台机器里面只能有一个机器访问某网页一次。要求系统效率高,communication 负荷小。
 - [ ] http://stackoverflow.com/questions/17928158/find-top-10-most-frequent-visited-url-data-is-stored-accross-network
-- [ ] fill tank with min steps, Tank Size: 80 litre, Containers: 1,3,5,6,25 litre, Solution: 4: 5, 25, 25, 25 **
-- [ ] Different Ways to Add Parentheses? **
-    1. only number, use binary search to optimize
 - [ ] Leetcode read4
     1. read 4096
-- [ ] 平面上很多点,是否存在 条垂直于x轴的线,使得这些点对于这条线轴对称
+- [x] 平面上很多点,是否存在一条垂直于x轴的线,使得这些点对于这条线轴对称
     ＊ find median of all x values, the store all points into hashmap
 - [ ] 10个机器,每个存有100G的ip地址,怎样找到出现次数最多的10个ip
     1. Redistribution using hash
@@ -489,22 +652,70 @@ public static boolean validate(byte[] bytes) {
 ```
 
 - [x] Write a program to count the total number of pages reachable from a website
-- [ ] how to design google recommendedation search results
+- [x] how to design google recommendedation search results
     * trie
     * distributed system, each cluster handling different prefixes
-- [ ] backup a big file from server a to server b, slow network speed, little change
+- [x] backup a big file from server a to server b, slow network speed, little change
     * rsync
-- [ ] implement `diff`
-- [ ] 一种新型的storage,怎么样用来scan engineer的hard disk来做备份
-- [ ] 给画布上的n个线段,问怎么画最快(移动画笔会浪费时间)
-    * sort lines first (based on two points and length)
-- [ ] 实现扫雷
-- [ ] 设计电话本系统,实现三个功能:查找号码 boolean isTaken(),添加号码 void takeNumber(),返回1个不在电话本的号码 number giveMeANumber()
+- [x] XML Parser
+
+```javascript
+const xmlparser = (xml) => {
+    const matches = xml.match(/\<([a-zA-Z0-9\-]+)\>([\w\W]*)\<\/\1\>\s*/g);
+    if (!matches) return xml;
+    return matches.map(e => {
+        const [elementName, inner] = e.trim().match(/^\<([a-zA-Z0-9\-]+)\>([\w\W]*)\<\/\1\>$/).slice(1, 3);
+        
+        return {
+            elementName,
+            children: xmlparser(inner.trim()),
+        };
+    });
+}
+```
+
+### OOD
+- [ ] snake
+- [x] contact system, boolean isTaken(), void takeNumber(), number giveMeANumber()
     * trie with numbers available at current level
-- [ ] class design for snake
-- [ ] 写jump iterator类, 构造函数传  个普通的iterator, 然后实现next(), hasNext(). next()返回传 iterator的next().next(), 就是每次跳过 个元素输出. 然后再实现 个rotateIterator(), 构造函数传入List<Iterator<T>>, 实现next(), hasNext(). 例如:传 的三个iterator  的值分别是[[1,2,3],[4,5,6], [7,8]], 那rotateIterator的next()应该输出[1,4,7,2,5,8,3,6]. 就是竖着遍历每个iterator输出, 如果当前的iterator没有了, 就跳到下 个.
-- [ ] stable marriage problem
-- [ ] [maximum flow problem](http://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/)
+- [ ] mineweeper
+- [ ] parking lot (CC)
+- [ ] 要给一个家具工厂的所有家具做质量测试(压力测试，是否易燃等等)
+- [ ] 邮件系统
+- [ ] truck tracking system，要求实现查询truck的地点，每天的行程之类
+- [ ] 图书推荐系统，类似facebook, twitter那样的好友系统，可以看评价，可以写评价，有好友列表一类的, 你有朋友A，朋友A有他的朋友B， 你要看到所有A,B,B的朋友的推荐书单, top n most popular book
+- [ ] opentable, 用户输入 restaurant, timeslot, 人数, 返回是否可以预订 一个restaurant 可能有多个桌子, 每个桌子可能可以坐多个人 如果预订的时候,人数大于一个桌子, 可以把相邻的桌子 combine, timeslot 30分钟算一个, 一天就可以算24*2个, 编号从0到47, 用户的输入只能有一个 timeslot
+- [ ] traffic management system
+- [ ] UBER”， 然后是代码实现UBER里面 makeOrder这个method，最后是代码题，给你一个金额，几种面额，问你几种组合方式
+- [ ] 怎么设计系统，可以detect fake comments
+- [ ] zoo
+- [ ] tic tac toe 游戏 设计整个游戏 不只是怎么判断赢
+- [ ] file system, focus on permission
+- [ ] 交 通路口，目的是统计车流，反馈给我们的用户
+- [ ] board game
+- [ ] vending machine
+- [ ] 设计paint，可以画各种图形，图形还要旋转，组合什么的
+- [ ] 上传下载服务。要求任务能并行，能查询任务状态，每个用户能够同 时进行的任务有数量限制
+- [ ] 设计parkingspace，里面有很多种space(比如smallspace middlespace largespace), 对应 不同型号的车。尽量让space都利用好
+- [ ] 设计整个亚马逊的物品、 仓库、卡车互动系统。仓库遍布美国，卡车有油量，仓库之间有些有路径有些没 有
+- [ ] 设计一个餐厅。然后他说如果他和他朋友第二天6pm要来吃饭，但是餐厅已经订满了，怎 么schedule。还问了怎么拼桌子来满足客户的要求
+- [ ] 玩21点。可以有AI和有人玩
+- [ ] hotel management system (similar to online reader system in cc150, libary contains rooms, active room, active user)
+- [ ] online booking system (cc150)
+- [ ] animal kingdom, animal zoo
+- [ ] file system (cc150)
+- [ ] deck (cc150, or deck.java)
+- [ ] wallet
+- [ ] design hashtable (cc150)
+- [ ] design library, track records of books, CDs (cc150)
+- [ ] short url, 设计短网址服务器构架。讨论流量，服务器架构和数据库架构。纯设计
+- [ ] Airbnb language translate system (i18n)
+- [ ] autocomplete in a search engine
+- [ ] 1b active users, use posts，each post has: name, time, system need search functionality，query: keyword+ OR, return related post
+    * how to store posts
+    * data structure for searching
+    * how many machine needed for each functionality
+- [ ] twitter
 
 ## notes
 
@@ -597,9 +808,8 @@ When a thread context-switches, it calls into the scheduler (the scheduler does 
 ​BFS | O(b^d) | O(b^d) | space not issue, want the closest answer to the root
 ​IDDFS | O(b^d) | O(bd) | need a BFS but not enough memory, slower performance is accepted
 
-
-
 ## checklist
+​​
 - [x] HTTP
 - [x] WebSockets
 - [x] cookies
