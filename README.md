@@ -1,5 +1,8 @@
 # interview preparation
 
+**NOTICE**: this prep has moved to [GitBook](https://i-serve-markdown.gitbooks.io/interview-prep/content/). This repo will just serve as a history and storage for some file.
+
+
 ## given problem...
 1. **clarify problem**
     * consider an example that is rich enough but not tedious disambiguate expected result
@@ -236,8 +239,10 @@ function convert (date) {
 - [x] remove duplicate lines of a file
     * `cat filename | sort | uniq`
     * *follow up* what if the file is very large which could not be held in the main memory
-- [ ] longest repeating substring, e.g. "abab" for "ababab"
-    * http://www.geeksforgeeks.org/longest-repeating-subsequence/
+- [x] longest repeating substring, e.g. "abab" for "ababab"
+    * building a suffix tree, find deepest **internal** node, longest repeating substring is from root to that node
+    * O(n) time and space
+    * https://en.wikipedia.org/wiki/Longest_repeated_substring_problem
 - [ ] You are given a String number containing the digits of a phone number (the number of digits, n, can be any positive integer) . To help you memorize the number, you want to divide it into groups of contiguous digits. Each group must contain exactly 2 or 3 digits. There are three kinds of groups: • Excellent: A group that contains only the same digits. For example, 000 or 77. Good: A group of 3 digits, 2 of which are the same. For example, 030, 229 or 166. Usual: A group in which all the digits are distinct. For example, 123 or 90. The quality of a group assignment is defined as 2 × (number of excellent groups) + (number of good groups) Divide the number into groups such that the quality is maximized. Design an efficient algorithm to return the solution that maximizes the quality. **
 - [ ] implement strstrp(String a, String b) returns index where any permutation of b is a substring of a. e.g. strstrp("hello", "lle") returns 1, O(n)
     * http://coderchen.blogspot.com/2015/10/implement-function-strstrpstring-string.html
@@ -398,7 +403,23 @@ function* odd(arr) {
 ### matrix
 - [ ] check numbers on antidiagonal are the same
     * *follow up* matrix is too big for RAM
-- [ ] random maze generator, no closing space
+- [x] random maze generator, no closing space
+    * each cell a node, connect nodes to form a graph, generate a random minimum spanning tree
+    * DFS
+
+```
+Make the initial cell the current cell and mark it as visited
+While there are unvisited cells
+    If the current cell has any neighbours which have not been visited
+        Choose randomly one of the unvisited neighbours
+        Push the current cell to the stack
+        Remove the wall between the current cell and the chosen cell
+        Make the chosen cell the current cell and mark it as visited
+    Else if stack is not empty
+        Pop a cell from the stack
+        Make it the current cell
+```
+
 - [ ] given matrix, each node is a computer, cost to transfer a file is the distance, all computers are recivers, what's the cost
 - [ ] 给一个图 让求图中所有的正方形, design own data structure
 - [ ] A circus is designing a tower routine consisting of people standing atop one another’s shoulders. For practical and aesthetic reasons, each person must be both shorter and lighter than the person below him or her. Given the heights and weights of each person in the circus, write a method to compute the largest possible number of people
@@ -560,7 +581,24 @@ const deserialize = (str) => {
 * integer division, think about negative numbers, truncation
 * [Segregate Even and Odd numbers](http://www.geeksforgeeks.org/segregate-even-and-odd-numbers/)
 
-- [ ] 生成palindrome number, 然后寻找最相近的palindrome number,最简单的了,不过要注意奇数个digits和偶数个digits
+- [ ] most closed palindrome number
+    * [next smallest palindrome number larget than it](https://lxia.gitbooks.io/summary-of-learning/content/.2_mianjing/sheng_cheng_palindrome_number__ran_hou_xun_zhao_zu.html)
+
+```javascript
+const nextPalindrome = (num) => {
+    const s = '' + num;
+    const len = s.length;
+
+    if (len & 1) {
+        const sub = s.substr(0, len / 2).split('').reverse().join('');
+        return s.substr(0, len / 2 + 1) + sub;
+    } else {
+        const sub = s.substr(0, len / 2).split('').reverse().join('');
+        return s.substr(0, len / 2) + sub;
+    }
+}
+```
+
 - [ ] first n prime number
 - [x] input: polite number, output: politeness (number of ways it can be expressed as the sum of consecutive integers)
     * is the number of odd divisors of the number
